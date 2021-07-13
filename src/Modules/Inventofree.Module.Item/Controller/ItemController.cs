@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventofree.Module.Item.Controller
 {
     [ApiController]
-    [Route("/api/item/[controller]")]
+    [Route("/api/[controller]")]
     internal class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;

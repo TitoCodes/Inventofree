@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Item;
 using Inventofree.Module.Item.Core.Queries;
@@ -18,16 +19,16 @@ namespace Inventofree.Module.Item.Controller
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var item = await _mediator.Send(new GetAllItemsQuery());
+            var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
             return Ok(item);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterItemAsync(RegisterItemCommand command)
+        public async Task<IActionResult> RegisterItemAsync(RegisterItemCommand command, CancellationToken cancellationToken)
         {
-            return Ok(await _mediator.Send(command));
+            return Ok(await _mediator.Send(command, cancellationToken));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Inventofree.Module.Item;
+using Inventofree.Module.User;
 using Inventofree.Shared.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace Inventofree.Api
             services.AddControllers();
             services.AddSharedInfrastructure(Configuration);
             services.AddItemModule(Configuration);
+            services.AddUserModule(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Inventofree.Api", Version = "v1"});

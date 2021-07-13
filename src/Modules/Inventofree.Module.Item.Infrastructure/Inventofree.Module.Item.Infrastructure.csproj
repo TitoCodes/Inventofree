@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Inventofree.Shared.Infrastructure\Inventofree.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.Item.Core\Inventofree.Module.Item.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations" />
+    </ItemGroup>
+
+</Project>

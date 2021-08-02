@@ -12,6 +12,10 @@ namespace Inventofree.Module.User.Core.Entities
 
         public string Lastname { get; set; }
 
+        public string PasswordHash { get; set; }
+
+        public byte[] Salt { get; set; }
+
         public long? ModifiedId { get; set; }
         
         public virtual User Modified { get; set; }

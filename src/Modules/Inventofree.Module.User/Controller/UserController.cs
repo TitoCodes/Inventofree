@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.User.Core.Command.User.InsertUser;
@@ -8,7 +9,7 @@ namespace Inventofree.Module.User.Controller
 {
     [ApiController]
     [Route("/api/[controller]")]
-    internal class UserController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -20,7 +21,14 @@ namespace Inventofree.Module.User.Controller
         [HttpPost]
         public async Task<IActionResult> InsertUser(InsertUserCommand command, CancellationToken cancellationToken)
         {
-            return Ok(await _mediator.Send(command, cancellationToken));
+            try
+            {
+                return Ok(await _mediator.Send(command, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Item;
@@ -9,7 +10,7 @@ namespace Inventofree.Module.Item.Controller
 {
     [ApiController]
     [Route("/api/[controller]")]
-    internal class ItemController : ControllerBase
+    public class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -17,18 +18,34 @@ namespace Inventofree.Module.Item.Controller
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
-            return Ok(item);
+            try
+            {
+                var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
+
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterItemAsync(RegisterItemCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> RegisterItemAsync(RegisterItemCommand command,
+            CancellationToken cancellationToken)
         {
-            return Ok(await _mediator.Send(command, cancellationToken));
+            try
+            {
+                return Ok(await _mediator.Send(command, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

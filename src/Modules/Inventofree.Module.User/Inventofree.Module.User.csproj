@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Inventofree.Module.User.Core\Inventofree.Module.User.Core.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.User.Infrastructure\Inventofree.Module.User.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

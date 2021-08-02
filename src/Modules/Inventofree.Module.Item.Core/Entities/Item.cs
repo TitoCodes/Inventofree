@@ -1,8 +1,9 @@
+using Inventofree.Shared.Core.Entities;
+
 namespace Inventofree.Module.Item.Core.Entities
 {
-    public class Item
+    public class Item : BaseEntity
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Detail { get; set; }
     }

@@ -1,0 +1,17 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=11d60c66_002D85a3_002D4bfe_002D99d6_002D9abcb987f40b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShouldReturnItems" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::71C22B84-1993-44C3-9DC6-8F34F49371B8::net5.0::Inventofree.Module.Item.UnitTest.Controller.ItemControllerTest.ShouldReturnItems&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::71C22B84-1993-44C3-9DC6-8F34F49371B8::net5.0::Inventofree.Module.Item.UnitTest.Controller.ItemControllerTest.ShouldAddItems&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::71C22B84-1993-44C3-9DC6-8F34F49371B8::net5.0::Inventofree.Module.Item.UnitTest.Controller.ItemControllerTest.ShouldReturnBadRequestInvalidEmailFormat&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::71C22B84-1993-44C3-9DC6-8F34F49371B8::net5.0::Inventofree.Module.Item.UnitTest.Controller.ItemControllerTest.ShouldReturnBadRequestItemWithTheSameNameExists&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A::net5.0::Inventofree.Module.User.UnitTest.Controller.UserControllerTest.ShouldReturnBadRequestUserAlreadyExists&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::71C22B84-1993-44C3-9DC6-8F34F49371B8::net5.0::Inventofree.Module.Item.UnitTest.Controller.ItemControllerTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A::net5.0::Inventofree.Module.User.UnitTest.Controller.UserControllerTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=src_002FModules_002FItem_002FInventofree_002EModule_002EItem_002ECore_002FResources_002FItemErrorMessages/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=src_002FModules_002FUser_002FInventofree_002EModule_002EUser_002ECore_002FResources_002FUserErrorMessages/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Inventofree/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Middlename/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

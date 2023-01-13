@@ -24,8 +24,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Shared.Models", "src\Shared\Inventofree.Shared.Models\Inventofree.Shared.Models.csproj", "{F8C6C105-AAD1-4B3F-9DB1-C5A9EA007179}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Http", "Http", "{4A82F088-C380-4C21-BDE1-055C3B6509E3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{280BB301-28FF-4193-B493-7F5F276B8984}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User", "src\Modules\Inventofree.Module.User\Inventofree.Module.User.csproj", "{12000E6C-EAC1-4560-BD21-BE9E8DE6BB96}"
@@ -49,6 +47,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.UnitTest", "test\Modules\Item\Inventofree.Module.Item.UnitTest\Inventofree.Module.Item.UnitTest.csproj", "{71C22B84-1993-44C3-9DC6-8F34F49371B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User.UnitTest", "test\Modules\Item\Inventofree.Module.User.UnitTest\Inventofree.Module.User.UnitTest.csproj", "{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{2233C2F5-62D7-4C1E-B199-6889A30ECA04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

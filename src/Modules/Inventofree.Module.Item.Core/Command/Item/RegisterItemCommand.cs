@@ -17,8 +17,6 @@ namespace Inventofree.Module.Item.Core.Command.Item
         public string Detail { get; set; }
 
         public int CreatedBy { get; set; }
-
-        public DateTimeOffset DateCreated { get; set; }
     }
 
     internal class RegisterCommandHandler : IRequestHandler<RegisterItemCommand, long>

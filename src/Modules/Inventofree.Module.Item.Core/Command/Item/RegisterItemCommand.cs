@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Inventofree.Module.Item.Core.Abstractions;
 using Inventofree.Module.Item.Core.Resources;
 using Inventofree.Module.User.Core.Abstractions;
@@ -23,11 +24,13 @@ namespace Inventofree.Module.Item.Core.Command.Item
     {
         private readonly IItemDbContext _itemDbContext;
         private readonly IUserDbContext _userDbContext;
+        private readonly IMapper _mapper;
 
-        public RegisterCommandHandler(IItemDbContext itemDbContext, IUserDbContext userDbContext)
+        public RegisterCommandHandler(IItemDbContext itemDbContext, IUserDbContext userDbContext, IMapper mapper)
         {
             _itemDbContext = itemDbContext;
             _userDbContext = userDbContext;
+            _mapper = mapper;
         }
 
         public async Task<long> Handle(RegisterItemCommand command, CancellationToken cancellationToken)
@@ -43,15 +46,8 @@ namespace Inventofree.Module.Item.Core.Command.Item
             {
                 throw new Exception(UserErrorMessages.UserNotFound);    
             }
-            
-            var item = new Entities.Item()
-            {
-                Detail = command.Detail,
-                Name = command.Name,
-                CreatedDate = DateTime.UtcNow,
-                CreatedBy = command.CreatedBy
-            };
-            
+
+            var item = _mapper.Map<Entities.Item>(command); 
             await _itemDbContext.Items.AddAsync(item, cancellationToken);
             await _itemDbContext.SaveChangesAsync(cancellationToken);
             return item.Id;

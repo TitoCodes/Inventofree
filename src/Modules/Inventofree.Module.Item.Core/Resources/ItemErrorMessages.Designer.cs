@@ -50,5 +50,11 @@ namespace Inventofree.Module.Item.Core.Resources {
                 return ResourceManager.GetString("DuplicateItemName", resourceCulture);
             }
         }
+        
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
     }
 }

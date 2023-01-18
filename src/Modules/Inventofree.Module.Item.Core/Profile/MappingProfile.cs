@@ -6,7 +6,7 @@ namespace Inventofree.Module.Item.Core.Profile
     public class MappingProfile : AutoMapper.Profile
     {
         public MappingProfile() {
-            CreateMap<RegisterItemCommand, Entities.Item>()
+            CreateMap<AddItemCommand, Entities.Item>()
                 .ForMember(
                     dest => dest.CreatedDate,
                     opt => opt.MapFrom(src => DateTimeOffset.UtcNow)

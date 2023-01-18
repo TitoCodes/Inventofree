@@ -34,9 +34,22 @@ namespace Inventofree.Module.Item.Controller
             }
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateItemAsync(UpdateItemCommand command, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _mediator.Send(command, cancellationToken);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> RegisterItemAsync(RegisterItemCommand command,
-            CancellationToken cancellationToken)
+        public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
         {
             try
             {

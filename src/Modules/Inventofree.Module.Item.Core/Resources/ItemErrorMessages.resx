@@ -22,6 +22,9 @@
         <value>Item with the same name already exists.</value>
     </data>
     <data name="NotFound" xml:space="preserve">
-        <value>The item you're trying to found is not found.</value>
+        <value>Item not found</value>
+    </data>
+    <data name="ItemsNull" xml:space="preserve">
+        <value>Items not found</value>
     </data>
 </root>

@@ -1,8 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventofree.Module.Item.Core.Command.Item;
-using Inventofree.Module.Item.Core.Queries;
+using Inventofree.Module.Item.Core.Command.Item.AddItem;
+using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
+using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

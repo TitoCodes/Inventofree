@@ -56,5 +56,11 @@ namespace Inventofree.Module.Item.Core.Resources {
                 return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
+        
+        public static string ItemsNull {
+            get {
+                return ResourceManager.GetString("ItemsNull", resourceCulture);
+            }
+        }
     }
 }

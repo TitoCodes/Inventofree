@@ -1,5 +1,6 @@
 using System;
 using Inventofree.Module.Item.Core.Command.Item;
+using Inventofree.Module.Item.Core.Command.Item.AddItem;
 
 namespace Inventofree.Module.Item.Core.Profile
 {

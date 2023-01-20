@@ -5,10 +5,10 @@ using Inventofree.Module.User.Core.Command.User.InsertUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Inventofree.Module.User.Controller
+namespace Inventofree.Module.User.Controller.v1
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/users")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

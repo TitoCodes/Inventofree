@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Controller;
+using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;

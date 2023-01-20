@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Controller;
-using Inventofree.Module.Item.Core.Command.Item;
-using Inventofree.Module.Item.Core.Queries;
+using Inventofree.Module.Item.Controller.v1;
+using Inventofree.Module.Item.Core.Command.Item.AddItem;
+using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
+using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
+using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -58,16 +61,16 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             long expectedItemId = 1;
 
             mediatrMock
-                .Setup(a => a.Send(It.IsAny<RegisterItemCommand>(), It.IsAny<CancellationToken>()))
+                .Setup(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedItemId)
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
 
-            var result = await sut.RegisterItemAsync(It.IsAny<RegisterItemCommand>(), It.IsAny<CancellationToken>());
+            var result = await sut.AddItemAsync(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>());
             var okResult = result as OkObjectResult;
 
-            mediatrMock.Verify(a => a.Send(It.IsAny<RegisterItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            mediatrMock.Verify(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             okResult.ShouldNotBeNull();
             okResult.Value.ShouldNotBeNull();
             okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
@@ -79,25 +82,112 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         public async Task ShouldReturnBadRequestItemWithTheSameNameExists()
         {
             var mediatrMock = new Mock<IMediator>();
-            var command = new RegisterItemCommand()
+            var command = new AddItemCommand()
             {
                 Name = "Sample name",
                 Detail = "Sample detail"
             };
 
             mediatrMock
-                .Setup(a => a.Send(It.IsAny<RegisterItemCommand>(), It.IsAny<CancellationToken>()))
+                .Setup(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()))
                 .Throws(new Exception(ItemErrorMessages.DuplicateItemName))
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
 
-            var result = await sut.RegisterItemAsync(command, It.IsAny<CancellationToken>());
+            var result = await sut.AddItemAsync(command, It.IsAny<CancellationToken>());
             var badReqResult = result as BadRequestObjectResult;
 
-            mediatrMock.Verify(a => a.Send(It.IsAny<RegisterItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            mediatrMock.Verify(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             badReqResult.ShouldNotBeNull();
             badReqResult.Value.ShouldBe(ItemErrorMessages.DuplicateItemName);
+            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnNoContentResultUpdatedItemId()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true)
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.UpdateItemAsync(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>());
+            var noContentResult = result as NoContentResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            noContentResult.ShouldNotBeNull();
+            noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnBadRequestItemNotFound()
+        {
+            var mediatrMock = new Mock<IMediator>();
+            var command = new UpdateItemCommand()
+            {
+                Name = "Sample name",
+                Detail = "Sample detail",
+                Id = 0
+            };
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception(ItemErrorMessages.NotFound))
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.UpdateItemAsync(command, It.IsAny<CancellationToken>());
+            var badReqResult = result as BadRequestObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            badReqResult.ShouldNotBeNull();
+            badReqResult.Value.ShouldBe(ItemErrorMessages.NotFound);
+            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnNoContentResultDeleteItemId()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.DeleteItemAsync(It.IsAny<int>(), It.IsAny<CancellationToken>());
+            var noContentResult = result as NoContentResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            noContentResult.ShouldNotBeNull();
+            noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnBadRequestDeleteItemNotFound()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception(ItemErrorMessages.NotFound))
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.DeleteItemAsync(1, It.IsAny<CancellationToken>());
+            var badReqResult = result as BadRequestObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            badReqResult.ShouldNotBeNull();
+            badReqResult.Value.ShouldBe(ItemErrorMessages.NotFound);
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
     }

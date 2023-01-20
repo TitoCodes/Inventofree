@@ -62,5 +62,11 @@ namespace Inventofree.Module.User.Core.Resources {
                 return ResourceManager.GetString("PasswordDoesntMatch", resourceCulture);
             }
         }
+        
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
     }
 }

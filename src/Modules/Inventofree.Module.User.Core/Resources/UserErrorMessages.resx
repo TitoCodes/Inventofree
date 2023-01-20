@@ -27,4 +27,7 @@
     <data name="PasswordDoesntMatch" xml:space="preserve">
         <value>Password mismatch.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>User not found.</value>
+    </data>
 </root>

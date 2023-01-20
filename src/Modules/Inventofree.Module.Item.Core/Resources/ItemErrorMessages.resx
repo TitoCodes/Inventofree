@@ -21,4 +21,10 @@
     <data name="DuplicateItemName" xml:space="preserve">
         <value>Item with the same name already exists.</value>
     </data>
+    <data name="NotFound" xml:space="preserve">
+        <value>Item not found</value>
+    </data>
+    <data name="ItemsNull" xml:space="preserve">
+        <value>Items not found</value>
+    </data>
 </root>

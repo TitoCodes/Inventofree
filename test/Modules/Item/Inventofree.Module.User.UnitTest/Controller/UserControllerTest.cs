@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Inventofree.Module.User.Core.Command.User.InsertUser;
 using Inventofree.Module.User.Core.Resources;
 using Inventofree.Module.User.Controller;
+using Inventofree.Module.User.Controller.v1;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

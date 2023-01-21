@@ -26,7 +26,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
             {
-                throw new Exception(ItemErrorMessages.DuplicateItemName);
+                throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
             }
 
             var user = await _userDbContext.Users.AsNoTracking()

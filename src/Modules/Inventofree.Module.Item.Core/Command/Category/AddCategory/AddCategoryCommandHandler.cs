@@ -9,26 +9,26 @@ using Inventofree.Module.User.Core.Resources;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Inventofree.Module.Item.Core.Command.Item.AddItem
+namespace Inventofree.Module.Item.Core.Command.Category.AddCategory
 {
-    public class AddItemCommandHandler : IRequestHandler<AddItemCommand, long>
+    public class AddCategoryCommandHandler: IRequestHandler<AddCategoryCommand, long>
     {
         private readonly IItemDbContext _itemDbContext;
         private readonly IUserDbContext _userDbContext;
         private readonly IMapper _mapper;
 
-        public AddItemCommandHandler(IItemDbContext itemDbContext, IUserDbContext userDbContext, IMapper mapper)
+        public AddCategoryCommandHandler(IItemDbContext itemDbContext, IUserDbContext userDbContext, IMapper mapper)
         {
             _itemDbContext = itemDbContext;
             _userDbContext = userDbContext;
             _mapper = mapper;
         }
 
-        public async Task<long> Handle(AddItemCommand command, CancellationToken cancellationToken)
+        public async Task<long> Handle(AddCategoryCommand command, CancellationToken cancellationToken)
         {
-            if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
+            if (await _itemDbContext.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
             {
-                throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
+                throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Category)));
             }
 
             var user = await _userDbContext.Users.FirstOrDefaultAsync(a => a.Id == command.CreatedBy,
@@ -39,10 +39,10 @@ namespace Inventofree.Module.Item.Core.Command.Item.AddItem
                 throw new Exception(UserErrorMessages.UserNotFound);
             }
 
-            var item = _mapper.Map<Entities.Item>(command);
-            await _itemDbContext.Items.AddAsync(item, cancellationToken);
+            var category = _mapper.Map<Entities.Category>(command);
+            await _itemDbContext.Categories.AddAsync(category, cancellationToken);
             await _itemDbContext.SaveChangesAsync(cancellationToken);
-            return item.Id;
+            return category.Id;
         }
     }
 }

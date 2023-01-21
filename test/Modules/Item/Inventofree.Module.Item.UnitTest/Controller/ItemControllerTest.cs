@@ -90,7 +90,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new Exception(ItemErrorMessages.DuplicateItemName))
+                .Throws(new Exception(ItemErrorMessages.DuplicateName))
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
@@ -100,7 +100,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock.Verify(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(ItemErrorMessages.DuplicateItemName);
+            badReqResult.Value.ShouldBe(ItemErrorMessages.DuplicateName);
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
         

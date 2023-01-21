@@ -11,7 +11,8 @@ namespace Inventofree.Module.Item.Infrastructure.Persistence
         }
 
         protected override string Schema => "Item";
-        
+
         public DbSet<Core.Entities.Item> Items { get; set; }
+        public DbSet<Core.Entities.Category> Categories { get; set; }
     }
 }

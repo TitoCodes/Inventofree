@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Category.AddCategory;
+using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,20 @@ namespace Inventofree.Module.Item.Controller.v1
             try
             {
                 await _mediator.Send(command, cancellationToken);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteCategoryAsync(int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _mediator.Send(new DeleteCategoryCommand() { Id = id }, cancellationToken);
                 return NoContent();
             }
             catch (Exception ex)

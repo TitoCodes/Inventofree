@@ -3,8 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Category.AddCategory;
+using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
+using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
+using Inventofree.Module.Item.Core.Entities;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -100,7 +103,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new Exception(ItemErrorMessages.NotFound))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Category))))
                 .Verifiable();
 
             var sut = new CategoryController(mediatrMock.Object);
@@ -111,7 +114,47 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock.Verify(a => a.Send(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(ItemErrorMessages.NotFound);
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Category)));
+            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnNoContentResultDeleteCategoryId()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<DeleteCategoryCommand>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.DeleteCategoryAsync(It.IsAny<int>(), It.IsAny<CancellationToken>());
+            var noContentResult = result as NoContentResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<DeleteCategoryCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            noContentResult.ShouldNotBeNull();
+            noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnBadRequestDeleteCategoryNotFound()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<DeleteCategoryCommand>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Category))))
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.DeleteCategoryAsync(1, It.IsAny<CancellationToken>());
+            var badReqResult = result as BadRequestObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<DeleteCategoryCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            badReqResult.ShouldNotBeNull();
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Category)));
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
     }

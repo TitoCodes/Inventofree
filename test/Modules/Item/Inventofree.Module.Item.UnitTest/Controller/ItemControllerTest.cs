@@ -137,7 +137,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new Exception(ItemErrorMessages.NotFound))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item))))
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
@@ -147,7 +147,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock.Verify(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(ItemErrorMessages.NotFound);
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
         
@@ -177,7 +177,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new Exception(ItemErrorMessages.NotFound))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item))))
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
@@ -187,7 +187,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             mediatrMock.Verify(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(ItemErrorMessages.NotFound);
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
     }

@@ -17,26 +17,8 @@ namespace Inventofree.Module.Item.Controller.v1
     {
         private readonly IMediator _mediator;
 
-        public ItemController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
-        {
-            try
-            {
-                return Ok(await _mediator.Send(command, cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllItemsAsync(CancellationToken cancellationToken)
         {
             try
             {
@@ -57,6 +39,24 @@ namespace Inventofree.Module.Item.Controller.v1
             {
                 var item = await _mediator.Send(new GetItemByIdQuery(){ Id = id}, cancellationToken);
                 return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        public ItemController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(command, cancellationToken));
             }
             catch (Exception ex)
             {

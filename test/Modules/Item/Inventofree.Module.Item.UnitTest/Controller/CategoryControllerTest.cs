@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Category.AddCategory;
 using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
-using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
-using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Entities;
+using Inventofree.Module.Item.Core.Queries.Category.GetAllCategories;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +20,40 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 {
     public class CategoryControllerTest
     {
+        [Fact]
+        public async Task ShouldReturnOksResultCategoryList()
+        {
+            var mediatrMock = new Mock<IMediator>();
+            var expectedCategories = new List<Category>()
+            {
+                new()
+                {
+                    Description = "Sample Category Description",
+                    Name = "Smart Phone",
+                    Id = 1,
+                    CreatedDate = new DateTime(1, 12, 12),
+                    ModifiedDate = new DateTime(1, 12, 11)
+                }
+            };
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetAllCategoriesQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedCategories)
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.GetAllCategoriesAsync(It.IsAny<CancellationToken>());
+            var okResult = result as OkObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetAllCategoriesQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            okResult.ShouldNotBeNull();
+            okResult.Value.ShouldNotBeNull();
+            okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
+            var items = okResult.Value as IEnumerable<Category>;
+            items.ShouldBeEquivalentTo(expectedCategories);
+        }
+        
         [Fact]
         public async Task ShouldReturnOkResultAddedCategoryId()
         {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Inventofree.Module.Item.Controller;
 using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
@@ -43,7 +42,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             var sut = new ItemController(mediatrMock.Object);
 
-            var result = await sut.GetAllAsync(It.IsAny<CancellationToken>());
+            var result = await sut.GetAllItemsAsync(It.IsAny<CancellationToken>());
             var okResult = result as OkObjectResult;
 
             mediatrMock.Verify(a => a.Send(It.IsAny<GetAllItemsQuery>(), It.IsAny<CancellationToken>()), Times.Once);

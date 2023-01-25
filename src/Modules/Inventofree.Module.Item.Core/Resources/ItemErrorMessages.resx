@@ -27,4 +27,7 @@
     <data name="ItemsNull" xml:space="preserve">
         <value>Items not found</value>
     </data>
+    <data name="CategoriesNotFound" xml:space="preserve">
+        <value>Categories not found</value>
+    </data>
 </root>

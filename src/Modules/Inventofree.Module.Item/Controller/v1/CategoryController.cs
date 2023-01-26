@@ -5,6 +5,7 @@ using Inventofree.Module.Item.Core.Command.Category.AddCategory;
 using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
 using Inventofree.Module.Item.Core.Queries.Category.GetAllCategories;
+using Inventofree.Module.Item.Core.Queries.Category.GetCategoryByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace Inventofree.Module.Item.Controller.v1
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllCategoriesAsync(CancellationToken cancellationToken)
         {
@@ -36,8 +37,24 @@ namespace Inventofree.Module.Item.Controller.v1
             }
         }
 
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetCategoryByName(string name, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var item = await _mediator.Send(new GetCategoryByNameQuery() { Name = name }, cancellationToken);
+
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> AddCategoryAsync(AddCategoryCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddCategoryAsync(AddCategoryCommand command,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -48,9 +65,10 @@ namespace Inventofree.Module.Item.Controller.v1
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpPut]
-        public async Task<IActionResult> UpdateCategoryAsync(UpdateCategoryCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateCategoryAsync(UpdateCategoryCommand command,
+            CancellationToken cancellationToken)
         {
             try
             {
@@ -62,7 +80,7 @@ namespace Inventofree.Module.Item.Controller.v1
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteCategoryAsync(int id, CancellationToken cancellationToken)
         {

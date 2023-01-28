@@ -5,6 +5,7 @@ using Inventofree.Module.Item.Core.Command.Category.AddCategory;
 using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
 using Inventofree.Module.Item.Core.Queries.Category.GetAllCategories;
+using Inventofree.Module.Item.Core.Queries.Category.GetCategoryById;
 using Inventofree.Module.Item.Core.Queries.Category.GetCategoryByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,21 @@ namespace Inventofree.Module.Item.Controller.v1
             try
             {
                 var item = await _mediator.Send(new GetCategoryByNameQuery() { Name = name }, cancellationToken);
+
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategoryById(int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var item = await _mediator.Send(new GetCategoryByIdQuery() { Id = id }, cancellationToken);
 
                 return Ok(item);
             }

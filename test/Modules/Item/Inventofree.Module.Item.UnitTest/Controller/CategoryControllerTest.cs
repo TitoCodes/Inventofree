@@ -8,8 +8,8 @@ using Inventofree.Module.Item.Core.Command.Category.DeleteCategory;
 using Inventofree.Module.Item.Core.Command.Category.UpdateCategory;
 using Inventofree.Module.Item.Core.Entities;
 using Inventofree.Module.Item.Core.Queries.Category.GetAllCategories;
+using Inventofree.Module.Item.Core.Queries.Category.GetCategoryById;
 using Inventofree.Module.Item.Core.Queries.Category.GetCategoryByName;
-using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +23,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
     public class CategoryControllerTest
     {
         [Fact]
-        public async Task ShouldReturnOksResultItemList()
+        public async Task ShouldReturnOksResultCategoryByName()
         {
             var mediatrMock = new Mock<IMediator>();
             var expectedCategory = new Category()
@@ -52,6 +52,48 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
             var items = okResult.Value as Category;
             items.ShouldBeEquivalentTo(expectedCategory);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnBadRequestResultCategoryByName()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetCategoryByNameQuery>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Category))))
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.GetCategoryByName(It.IsAny<string>(), It.IsAny<CancellationToken>());
+            var badReqResult = result as BadRequestObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetCategoryByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            badReqResult.ShouldNotBeNull();
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Category)));
+            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnBadRequestResultCategoryById()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetCategoryByIdQuery>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Category))))
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.GetCategoryById(It.IsAny<int>(), It.IsAny<CancellationToken>());
+            var badReqResult = result as BadRequestObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetCategoryByIdQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            badReqResult.ShouldNotBeNull();
+            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Category)));
+            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -87,6 +129,38 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
             var items = okResult.Value as IEnumerable<Category>;
             items.ShouldBeEquivalentTo(expectedCategories);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnOksResultCategoryById()
+        {
+            var mediatrMock = new Mock<IMediator>();
+            var expectedCategory = new Category()
+
+            {
+                Description = "Sample category description",
+                Name = "Headset",
+                Id = 1,
+                CreatedDate = new DateTime(1, 12, 12),
+                ModifiedDate = new DateTime(1, 12, 11)
+            };
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetCategoryByIdQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedCategory)
+                .Verifiable();
+
+            var sut = new CategoryController(mediatrMock.Object);
+
+            var result = await sut.GetCategoryById(It.IsAny<int>(), It.IsAny<CancellationToken>());
+            var okResult = result as OkObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetCategoryByIdQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            okResult.ShouldNotBeNull();
+            okResult.Value.ShouldNotBeNull();
+            okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
+            var items = okResult.Value as Category;
+            items.ShouldBeEquivalentTo(expectedCategory);
         }
 
         [Fact]

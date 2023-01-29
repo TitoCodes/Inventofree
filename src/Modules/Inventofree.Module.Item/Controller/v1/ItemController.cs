@@ -7,6 +7,7 @@ using Inventofree.Module.Item.Core.Command.Item.SetItemCategory;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Queries.Item.GetItemById;
+using Inventofree.Module.Item.Core.Queries.Item.GetItemsByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,12 @@ namespace Inventofree.Module.Item.Controller.v1
     public class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;
-
+        
+        public ItemController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+        
         [HttpGet]
         public async Task<IActionResult> GetAllItemsAsync(CancellationToken cancellationToken)
         {
@@ -34,7 +40,7 @@ namespace Inventofree.Module.Item.Controller.v1
         }
         
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetItemById(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetItemByIdAsync(int id, CancellationToken cancellationToken)
         {
             try
             {
@@ -47,11 +53,20 @@ namespace Inventofree.Module.Item.Controller.v1
             }
         }
         
-        public ItemController(IMediator mediator)
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> GetItemsByNameAsync(string name, CancellationToken cancellationToken)
         {
-            _mediator = mediator;
+            try
+            {
+                var item = await _mediator.Send(new GetItemsByNameQuery(){ Name = name}, cancellationToken);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
+using Inventofree.Module.Item.Core.Command.Item.SetItemCategory;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Dto.Item;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
@@ -120,6 +121,26 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             var noContentResult = result as NoContentResult;
 
             mediatrMock.Verify(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            noContentResult.ShouldNotBeNull();
+            noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnNoContentResultUpdatedItemCategory()
+        {
+            var mediatrMock = new Mock<IMediator>();
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Unit.Value)
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.SetItemCategoryAsync(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>());
+            var noContentResult = result as NoContentResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>()), Times.Once);
             noContentResult.ShouldNotBeNull();
             noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
         }

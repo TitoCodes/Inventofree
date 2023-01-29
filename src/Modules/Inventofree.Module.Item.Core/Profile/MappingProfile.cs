@@ -1,6 +1,8 @@
 using System;
 using Inventofree.Module.Item.Core.Command.Category.AddCategory;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
+using Inventofree.Module.Item.Core.Dto.Category;
+using Inventofree.Module.Item.Core.Dto.Item;
 
 namespace Inventofree.Module.Item.Core.Profile
 {
@@ -19,6 +21,7 @@ namespace Inventofree.Module.Item.Core.Profile
                     dest => dest.CreatedDate,
                     opt => opt.MapFrom(src => DateTimeOffset.UtcNow)
                 );
+            CreateMap<Entities.Item, ItemDto>();
         }
         
         private void CategoryMappingProfile()
@@ -28,6 +31,8 @@ namespace Inventofree.Module.Item.Core.Profile
                     dest => dest.CreatedDate,
                     opt => opt.MapFrom(src => DateTimeOffset.UtcNow)
                 );
+            CreateMap<Entities.Category, CategoryDto>();
+            CreateMap<Entities.Category, ItemCategoryDto>();
         }
     }
 }

@@ -6,6 +6,7 @@ using Inventofree.Module.Item.Controller.v1;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
+using Inventofree.Module.Item.Core.Dto.Item;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
@@ -23,7 +24,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         public async Task ShouldReturnOksResultItemList()
         {
             var mediatrMock = new Mock<IMediator>();
-            var expectedItems = new List<Core.Entities.Item>()
+            var expectedItems = new List<ItemDto>()
             {
                 new()
                 {
@@ -49,7 +50,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             okResult.ShouldNotBeNull();
             okResult.Value.ShouldNotBeNull();
             okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
-            var items = okResult.Value as IEnumerable<Core.Entities.Item>;
+            var items = okResult.Value as IEnumerable<ItemDto>;
             items.ShouldBeEquivalentTo(expectedItems);
         }
 

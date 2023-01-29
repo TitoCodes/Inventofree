@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Inventofree.Module.Item.Core.Command.Category.AddCategory
 {
-    public class AddCategoryCommandHandler: IRequestHandler<AddCategoryCommand, long>
+    public class AddCategoryCommandHandler : IRequestHandler<AddCategoryCommand, long>
     {
         private readonly IItemDbContext _itemDbContext;
         private readonly IUserDbContext _userDbContext;
@@ -27,17 +27,14 @@ namespace Inventofree.Module.Item.Core.Command.Category.AddCategory
         public async Task<long> Handle(AddCategoryCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
-            {
                 throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Category)));
-            }
+
 
             var user = await _userDbContext.Users.FirstOrDefaultAsync(a => a.Id == command.CreatedBy,
                 cancellationToken);
-
             if (user == null)
-            {
                 throw new Exception(UserErrorMessages.UserNotFound);
-            }
+
 
             var category = _mapper.Map<Entities.Category>(command);
             await _itemDbContext.Categories.AddAsync(category, cancellationToken);

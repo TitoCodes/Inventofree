@@ -14,5 +14,13 @@ namespace Inventofree.Module.Item.Infrastructure.Persistence
 
         public DbSet<Core.Entities.Item> Items { get; set; }
         public DbSet<Core.Entities.Category> Categories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Core.Entities.Item>()
+                .HasOne(p => p.Category)
+                .WithMany(b => b.Items)
+                .HasForeignKey(p => p.CategoryId);
+        }
     }
 }

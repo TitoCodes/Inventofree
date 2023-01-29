@@ -6,6 +6,6 @@ namespace Inventofree.Module.Item.Core.Command.Category.AddCategory
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int CreatedBy { get; set; }
+        public long CreatedBy { get; set; }
     }
 }

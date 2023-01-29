@@ -6,7 +6,9 @@ namespace Inventofree.Module.Item.Core.Entities
     {
         public string Name { get; set; }
         public string Detail { get; set; }
-        public int CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public long CreatedBy { get; set; }
+        public long UpdatedBy { get; set; }
+        public long? CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

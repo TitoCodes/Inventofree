@@ -4,6 +4,6 @@ namespace Inventofree.Module.Item.Core.Command.Item.DeleteItem
 {
     public class DeleteItemCommand: IRequest<Unit>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

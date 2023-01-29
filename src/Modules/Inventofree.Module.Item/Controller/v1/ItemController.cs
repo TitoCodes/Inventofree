@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
+using Inventofree.Module.Item.Core.Command.Item.SetItemCategory;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Queries.Item.GetItemById;
@@ -17,26 +18,8 @@ namespace Inventofree.Module.Item.Controller.v1
     {
         private readonly IMediator _mediator;
 
-        public ItemController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
-        {
-            try
-            {
-                return Ok(await _mediator.Send(command, cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllItemsAsync(CancellationToken cancellationToken)
         {
             try
             {
@@ -64,8 +47,40 @@ namespace Inventofree.Module.Item.Controller.v1
             }
         }
         
+        public ItemController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(command, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
         [HttpPut]
         public async Task<IActionResult> UpdateItemAsync(UpdateItemCommand command, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _mediator.Send(command, cancellationToken);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpPut("set-category")]
+        public async Task<IActionResult> SetItemCategoryAsync(SetItemCategoryCommand command, CancellationToken cancellationToken)
         {
             try
             {

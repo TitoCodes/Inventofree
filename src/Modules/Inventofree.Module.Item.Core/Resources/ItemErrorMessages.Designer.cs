@@ -45,9 +45,9 @@ namespace Inventofree.Module.Item.Core.Resources {
             }
         }
         
-        public static string DuplicateItemName {
+        public static string DuplicateName {
             get {
-                return ResourceManager.GetString("DuplicateItemName", resourceCulture);
+                return ResourceManager.GetString("DuplicateName", resourceCulture);
             }
         }
         
@@ -60,6 +60,12 @@ namespace Inventofree.Module.Item.Core.Resources {
         public static string ItemsNull {
             get {
                 return ResourceManager.GetString("ItemsNull", resourceCulture);
+            }
+        }
+        
+        public static string CategoriesNotFound {
+            get {
+                return ResourceManager.GetString("CategoriesNotFound", resourceCulture);
             }
         }
     }

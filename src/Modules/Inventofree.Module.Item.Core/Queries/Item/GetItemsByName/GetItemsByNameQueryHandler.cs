@@ -10,23 +10,22 @@ using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Inventofree.Module.Item.Core.Queries.Item.GetAllItems
+namespace Inventofree.Module.Item.Core.Queries.Item.GetItemsByName
 {
-    public class GetAllItemsQueryHandler : IRequestHandler<GetAllItemsQuery, IReadOnlyCollection<ItemDto>>
+    public class GetItemsByNameQueryHandler: IRequestHandler<GetItemsByNameQuery, IReadOnlyCollection<ItemDto>>
     {
         private readonly IItemDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetAllItemsQueryHandler(IItemDbContext context, IMapper mapper)
+        public GetItemsByNameQueryHandler(IItemDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<IReadOnlyCollection<ItemDto>> Handle(GetAllItemsQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<ItemDto>> Handle(GetItemsByNameQuery request, CancellationToken cancellationToken)
         {
-            var items = await _context.Items.Include(a => a.Category).OrderBy(a => a.Id).ToListAsync(cancellationToken);
+            var items = await _context.Items.Include(a => a.Category).Where(a => a.Name.Contains(request.Name)).ToListAsync(cancellationToken);
             if (!items.Any()) 
                 throw new Exception(ItemErrorMessages.ItemsNull);
             

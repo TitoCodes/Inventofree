@@ -9,6 +9,8 @@ using Inventofree.Module.Item.Core.Command.Item.SetItemCategory;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Dto.Item;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
+using Inventofree.Module.Item.Core.Queries.Item.GetItemById;
+using Inventofree.Module.Item.Core.Queries.Item.GetItemsByName;
 using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +58,71 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
+        public async Task ShouldReturnItemListMatchingByName()
+        {
+            var mediatrMock = new Mock<IMediator>();
+            var expectedItems = new List<ItemDto>()
+            {
+                new()
+                {
+                    Detail = "Sample Details",
+                    Name = "Headset",
+                    Id = 1,
+                    CreatedDate = new DateTime(1, 12, 12),
+                    ModifiedDate = new DateTime(1, 12, 11)
+                }
+            };
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetItemsByNameQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedItems)
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.GetItemsByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>());
+            var okResult = result as OkObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetItemsByNameQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            okResult.ShouldNotBeNull();
+            okResult.Value.ShouldNotBeNull();
+            okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
+            var items = okResult.Value as IEnumerable<ItemDto>;
+            items.ShouldBeEquivalentTo(expectedItems);
+        }
+
+        [Fact]
+        public async Task ShouldReturnItemById()
+        {
+            var mediatrMock = new Mock<IMediator>();
+            var expectedItem = new ItemDto()
+            {
+                Detail = "Sample Details",
+                Name = "Headset",
+                Id = 1,
+                CreatedDate = new DateTime(1, 12, 12),
+                ModifiedDate = new DateTime(1, 12, 11)
+            };
+
+            mediatrMock
+                .Setup(a => a.Send(It.IsAny<GetItemByIdQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedItem)
+                .Verifiable();
+
+            var sut = new ItemController(mediatrMock.Object);
+
+            var result = await sut.GetItemByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>());
+            var okResult = result as OkObjectResult;
+
+            mediatrMock.Verify(a => a.Send(It.IsAny<GetItemByIdQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            okResult.ShouldNotBeNull();
+            okResult.Value.ShouldNotBeNull();
+            okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
+            var items = okResult.Value as ItemDto;
+            items.ShouldBeEquivalentTo(expectedItem);
+        }
+
+        [Fact]
         public async Task ShouldReturnOkResultAddedItemId()
         {
             var mediatrMock = new Mock<IMediator>();
@@ -75,7 +142,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             okResult.ShouldNotBeNull();
             okResult.Value.ShouldNotBeNull();
             okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
-            var itemId = (long) okResult.Value;
+            var itemId = (long)okResult.Value;
             itemId.ShouldBeEquivalentTo(expectedItemId);
         }
 
@@ -104,7 +171,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             badReqResult.Value.ShouldBe(ItemErrorMessages.DuplicateName);
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
-        
+
         [Fact]
         public async Task ShouldReturnNoContentResultUpdatedItemId()
         {
@@ -124,7 +191,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             noContentResult.ShouldNotBeNull();
             noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
         }
-        
+
         [Fact]
         public async Task ShouldReturnNoContentResultUpdatedItemCategory()
         {
@@ -137,14 +204,16 @@ namespace Inventofree.Module.Item.UnitTest.Controller
 
             var sut = new ItemController(mediatrMock.Object);
 
-            var result = await sut.SetItemCategoryAsync(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>());
+            var result =
+                await sut.SetItemCategoryAsync(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>());
             var noContentResult = result as NoContentResult;
 
-            mediatrMock.Verify(a => a.Send(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>()), Times.Once);
+            mediatrMock.Verify(a => a.Send(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>()),
+                Times.Once);
             noContentResult.ShouldNotBeNull();
             noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
         }
-        
+
         [Fact]
         public async Task ShouldReturnBadRequestItemNotFound()
         {
@@ -171,7 +240,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
             badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
-        
+
         [Fact]
         public async Task ShouldReturnNoContentResultDeleteItemId()
         {
@@ -190,7 +259,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
             noContentResult.ShouldNotBeNull();
             noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
         }
-        
+
         [Fact]
         public async Task ShouldReturnBadRequestDeleteItemNotFound()
         {

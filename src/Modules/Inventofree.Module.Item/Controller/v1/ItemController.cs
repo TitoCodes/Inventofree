@@ -10,6 +10,7 @@ using Inventofree.Module.Item.Core.Queries.Item.GetItemById;
 using Inventofree.Module.Item.Core.Queries.Item.GetItemsByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Inventofree.Module.Item.Controller.v1
 {
@@ -18,10 +19,12 @@ namespace Inventofree.Module.Item.Controller.v1
     public class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
-        public ItemController(IMediator mediator)
+        private readonly ILogger<ItemController> _logger;
+
+        public ItemController(IMediator mediator, ILogger<ItemController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
         
         [HttpGet]
@@ -30,11 +33,11 @@ namespace Inventofree.Module.Item.Controller.v1
             try
             {
                 var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
-
                 return Ok(item);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex.InnerException, ex);
                 return BadRequest(ex.Message);
             }
         }

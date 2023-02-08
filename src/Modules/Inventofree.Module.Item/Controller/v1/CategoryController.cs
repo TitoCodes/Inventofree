@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Category.AddCategory;
@@ -26,89 +25,44 @@ namespace Inventofree.Module.Item.Controller.v1
         [HttpGet]
         public async Task<IActionResult> GetAllCategoriesAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
-
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
+            return Ok(item);
         }
 
         [HttpGet("{name}")]
         public async Task<IActionResult> GetCategoryByName(string name, CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetCategoryByNameQuery() { Name = name }, cancellationToken);
-
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetCategoryByNameQuery() { Name = name }, cancellationToken);
+            return Ok(item);
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id, CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetCategoryByIdQuery() { Id = id }, cancellationToken);
-
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetCategoryByIdQuery() { Id = id }, cancellationToken);
+            return Ok(item);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddCategoryAsync(AddCategoryCommand command,
             CancellationToken cancellationToken)
         {
-            try
-            {
-                return Ok(await _mediator.Send(command, cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _mediator.Send(command, cancellationToken));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCategoryAsync(UpdateCategoryCommand command,
             CancellationToken cancellationToken)
         {
-            try
-            {
-                await _mediator.Send(command, cancellationToken);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteCategoryAsync(int id, CancellationToken cancellationToken)
         {
-            try
-            {
-                await _mediator.Send(new DeleteCategoryCommand() { Id = id }, cancellationToken);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _mediator.Send(new DeleteCategoryCommand() { Id = id }, cancellationToken);
+            return NoContent();
         }
     }
 }

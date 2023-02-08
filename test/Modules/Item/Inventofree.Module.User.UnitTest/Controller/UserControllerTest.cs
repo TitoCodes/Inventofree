@@ -32,13 +32,8 @@ namespace Inventofree.Module.User.UnitTest.Controller
 
             var sut = new UserController(mediatrMock.Object);
 
-            var result = await sut.InsertUser(command, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(UserErrorMessages.InvalidEmailFormat);
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            Should.Throw<Exception>(async () => await sut.InsertUser(command, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(UserErrorMessages.InvalidEmailFormat);
         }
         
         [Fact]
@@ -57,13 +52,8 @@ namespace Inventofree.Module.User.UnitTest.Controller
 
             var sut = new UserController(mediatrMock.Object);
 
-            var result = await sut.InsertUser(command, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(UserErrorMessages.UserAlreadyExists);
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            Should.Throw<Exception>(async () => await sut.InsertUser(command, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(UserErrorMessages.UserAlreadyExists);
         }
         
         [Fact]
@@ -84,13 +74,8 @@ namespace Inventofree.Module.User.UnitTest.Controller
 
             var sut = new UserController(mediatrMock.Object);
 
-            var result = await sut.InsertUser(command, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(UserErrorMessages.PasswordDoesntMatch);
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            Should.Throw<Exception>(async () => await sut.InsertUser(null, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(UserErrorMessages.PasswordDoesntMatch);
         }
         
         [Fact]
@@ -103,14 +88,9 @@ namespace Inventofree.Module.User.UnitTest.Controller
                 .Verifiable();
 
             var sut = new UserController(mediatrMock.Object);
-
-            var result = await sut.InsertUser(null, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<InsertUserCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(nameof(InsertUserCommand));
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            
+            Should.Throw<ArgumentException>(async () => await sut.InsertUser(null, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(nameof(InsertUserCommand));
         }
         
         [Fact]

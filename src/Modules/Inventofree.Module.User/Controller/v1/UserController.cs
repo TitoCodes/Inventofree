@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.User.Core.Command.User.InsertUser;
@@ -17,18 +16,11 @@ namespace Inventofree.Module.User.Controller.v1
         {
             _mediator = mediator;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> InsertUser(InsertUserCommand command, CancellationToken cancellationToken)
         {
-            try
-            {
-                return Ok(await _mediator.Send(command, cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _mediator.Send(command, cancellationToken));
         }
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using Inventofree.Api.Middleware;
 using Inventofree.Module.Item;
 using Inventofree.Module.User;
 using Inventofree.Shared.Infrastructure.Extensions;
@@ -48,6 +50,8 @@ namespace Inventofree.Api
 
             app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

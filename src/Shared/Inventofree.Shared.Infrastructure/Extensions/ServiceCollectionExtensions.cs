@@ -23,6 +23,7 @@ namespace Inventofree.Shared.Infrastructure.Extensions
             services.AddMSSQL<T>(connectionString);
             return services;
         }
+        
         private static IServiceCollection AddMSSQL<T>(this IServiceCollection services, string connectionString) where T : DbContext
         {
             services.AddDbContext<T>(m => m.UseSqlServer(connectionString, e => e.MigrationsAssembly(typeof(T).Assembly.FullName)));

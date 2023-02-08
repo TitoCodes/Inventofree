@@ -15,6 +15,7 @@ using Inventofree.Module.Item.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Shouldly;
 using Xunit;
@@ -162,21 +163,15 @@ namespace Inventofree.Module.Item.UnitTest.Controller
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
-
-            var result = await sut.AddItemAsync(command, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<AddItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(ItemErrorMessages.DuplicateName);
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            
+            Should.Throw<Exception>(async () => await sut.AddItemAsync(command, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(ItemErrorMessages.DuplicateName);
         }
 
         [Fact]
         public async Task ShouldReturnNoContentResultUpdatedItemId()
         {
             var mediatrMock = new Mock<IMediator>();
-
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true)
@@ -196,7 +191,6 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         public async Task ShouldReturnNoContentResultUpdatedItemCategory()
         {
             var mediatrMock = new Mock<IMediator>();
-
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<SetItemCategoryCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Unit.Value)
@@ -231,21 +225,15 @@ namespace Inventofree.Module.Item.UnitTest.Controller
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
-
-            var result = await sut.UpdateItemAsync(command, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<UpdateItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            
+            Should.Throw<Exception>(async () => await sut.UpdateItemAsync(command, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
         }
 
         [Fact]
         public async Task ShouldReturnNoContentResultDeleteItemId()
         {
             var mediatrMock = new Mock<IMediator>();
-
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
@@ -264,21 +252,15 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         public async Task ShouldReturnBadRequestDeleteItemNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
-
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()))
                 .Throws(new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item))))
                 .Verifiable();
 
             var sut = new ItemController(mediatrMock.Object);
-
-            var result = await sut.DeleteItemAsync(1, It.IsAny<CancellationToken>());
-            var badReqResult = result as BadRequestObjectResult;
-
-            mediatrMock.Verify(a => a.Send(It.IsAny<DeleteItemCommand>(), It.IsAny<CancellationToken>()), Times.Once);
-            badReqResult.ShouldNotBeNull();
-            badReqResult.Value.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
-            badReqResult.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+            
+            Should.Throw<Exception>(async () => await sut.DeleteItemAsync(1, It.IsAny<CancellationToken>()))
+                .Message.ShouldBe(string.Format(ItemErrorMessages.NotFound, nameof(Core.Entities.Item)));
         }
     }
 }

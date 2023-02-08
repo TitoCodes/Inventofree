@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
@@ -18,108 +17,59 @@ namespace Inventofree.Module.Item.Controller.v1
     public class ItemController : ControllerBase
     {
         private readonly IMediator _mediator;
-        
+
         public ItemController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllItemsAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
-
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
+            return Ok(item);
         }
-        
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetItemByIdAsync(int id, CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetItemByIdQuery(){ Id = id}, cancellationToken);
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetItemByIdQuery() { Id = id }, cancellationToken);
+            return Ok(item);
         }
-        
+
         [HttpGet("name/{name}")]
         public async Task<IActionResult> GetItemsByNameAsync(string name, CancellationToken cancellationToken)
         {
-            try
-            {
-                var item = await _mediator.Send(new GetItemsByNameQuery(){ Name = name}, cancellationToken);
-                return Ok(item);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var item = await _mediator.Send(new GetItemsByNameQuery() { Name = name }, cancellationToken);
+            return Ok(item);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AddItemAsync(AddItemCommand command, CancellationToken cancellationToken)
         {
-            try
-            {
-                return Ok(await _mediator.Send(command, cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _mediator.Send(command, cancellationToken));
         }
-        
+
         [HttpPut]
         public async Task<IActionResult> UpdateItemAsync(UpdateItemCommand command, CancellationToken cancellationToken)
         {
-            try
-            {
-                await _mediator.Send(command, cancellationToken);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
-        
+
         [HttpPut("set-category")]
-        public async Task<IActionResult> SetItemCategoryAsync(SetItemCategoryCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> SetItemCategoryAsync(SetItemCategoryCommand command,
+            CancellationToken cancellationToken)
         {
-            try
-            {
-                await _mediator.Send(command, cancellationToken);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _mediator.Send(command, cancellationToken);
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteItemAsync(int id, CancellationToken cancellationToken)
         {
-            try
-            {
-                await _mediator.Send(new DeleteItemCommand() { Id = id }, cancellationToken);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _mediator.Send(new DeleteItemCommand() { Id = id }, cancellationToken);
+            return NoContent();
         }
     }
 }

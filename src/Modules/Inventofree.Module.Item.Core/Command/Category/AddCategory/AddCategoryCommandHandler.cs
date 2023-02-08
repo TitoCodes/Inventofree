@@ -34,8 +34,7 @@ namespace Inventofree.Module.Item.Core.Command.Category.AddCategory
                 cancellationToken);
             if (user == null)
                 throw new Exception(UserErrorMessages.UserNotFound);
-
-
+            
             var category = _mapper.Map<Entities.Category>(command);
             await _itemDbContext.Categories.AddAsync(category, cancellationToken);
             await _itemDbContext.SaveChangesAsync(cancellationToken);

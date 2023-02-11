@@ -9,6 +9,8 @@ namespace Inventofree.Module.Item.Core.Command.Item.AddItem
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Detail).NotEmpty();
             RuleFor(x => x.CreatedBy).NotEmpty().NotEqual(0);
+            RuleFor(x => x.Price).NotEmpty();
+            RuleFor(x => x.Price.CurrencyType).IsInEnum();
         }
     }
 }

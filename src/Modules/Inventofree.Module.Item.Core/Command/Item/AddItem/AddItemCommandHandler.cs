@@ -35,8 +35,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.AddItem
 
             if (user == null)
                 throw new Exception(UserErrorMessages.UserNotFound);
-
-
+            
             if (command.CategoryId != null)
             {
                 var category =

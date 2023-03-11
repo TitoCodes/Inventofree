@@ -38,6 +38,8 @@ namespace Inventofree.Module.Item.Core.Profile
                     dest => dest.Currency,
                     opt => opt.MapFrom(src => src.CurrencyType)
                 );
+            CreateMap<Price, PriceDto>();
+            CreateMap<Price, ItemPriceDto>();
         }
 
         private void CategoryMappingProfile()

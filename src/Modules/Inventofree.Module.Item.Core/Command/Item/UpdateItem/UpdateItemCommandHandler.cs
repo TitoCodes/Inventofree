@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Inventofree.Module.Item.Core.Abstractions;
+using Inventofree.Module.Item.Core.Entities;
 using Inventofree.Module.Item.Core.Resources;
 using Inventofree.Module.User.Core.Abstractions;
 using Inventofree.Module.User.Core.Resources;
@@ -15,11 +16,13 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
     {
         private readonly IItemDbContext _itemDbContext;
         private readonly IUserDbContext _userDbContext;
+        private readonly IMapper _mapper;
 
         public UpdateItemCommandHandler(IItemDbContext itemDbContext, IUserDbContext userDbContext, IMapper mapper)
         {
             _itemDbContext = itemDbContext;
             _userDbContext = userDbContext;
+            _mapper = mapper;
         }
 
         public async Task<bool> Handle(UpdateItemCommand command, CancellationToken cancellationToken)
@@ -45,6 +48,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
             existingItem.Detail = command.Detail;
             existingItem.ModifiedDate = DateTimeOffset.UtcNow;
             existingItem.UpdatedBy = command.UpdatedBy;
+            existingItem.Price = _mapper.Map<Price>(command.Price);
 
             _itemDbContext.Items.Update(existingItem);
             await _itemDbContext.SaveChangesAsync(cancellationToken);

@@ -26,8 +26,11 @@ namespace Inventofree.Module.Item.Core.Queries.Item.GetAllItems
         public async Task<IReadOnlyCollection<ItemDto>> Handle(GetAllItemsQuery request,
             CancellationToken cancellationToken)
         {
-            throw new InvalidOperationException("Ooops something went wrong");
-            var items = await _context.Items.Include(a => a.Category).OrderBy(a => a.Id).ToListAsync(cancellationToken);
+            var items = await _context.Items
+                .Include(a => a.Category)
+                .Include(a => a.Price)
+                .OrderBy(a => a.Id)
+                .ToListAsync(cancellationToken);
             if (!items.Any()) 
                 throw new Exception(ItemErrorMessages.ItemsNull);
             

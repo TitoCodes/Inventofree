@@ -12,6 +12,8 @@ namespace Inventofree.Module.Item.Core.Dto.Item
         public long CreatedBy { get; set; }
         public long UpdatedBy { get; set; }
         public long? CategoryId { get; set; }
+        public long? PriceId { get; set; }
         public ItemCategoryDto Category { get; set; }
+        public ItemPriceDto Price { get; set; }
     }
 }

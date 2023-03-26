@@ -148,7 +148,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestItemWithTheSameNameExists()
+        public void ShouldReturnBadRequestItemWithTheSameNameExists()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new AddItemCommand()
@@ -209,7 +209,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestItemNotFound()
+        public void ShouldReturnBadRequestItemNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new UpdateItemCommand()
@@ -249,7 +249,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestDeleteItemNotFound()
+        public void ShouldReturnBadRequestDeleteItemNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
             mediatrMock

@@ -17,7 +17,7 @@ namespace Inventofree.Module.User.UnitTest.Controller
     public class UserControllerTest
     {
         [Fact]
-        public async Task ShouldReturnBadRequestInvalidEmailFormat()
+        public void ShouldReturnBadRequestInvalidEmailFormat()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new InsertUserCommand()
@@ -37,7 +37,7 @@ namespace Inventofree.Module.User.UnitTest.Controller
         }
         
         [Fact]
-        public async Task ShouldReturnBadRequestUserAlreadyExists()
+        public void ShouldReturnBadRequestUserAlreadyExists()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new InsertUserCommand()
@@ -57,7 +57,7 @@ namespace Inventofree.Module.User.UnitTest.Controller
         }
         
         [Fact]
-        public async Task ShouldReturnBadRequestPasswordMismatch()
+        public void ShouldReturnBadRequestPasswordMismatch()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new InsertUserCommand()
@@ -79,7 +79,7 @@ namespace Inventofree.Module.User.UnitTest.Controller
         }
         
         [Fact]
-        public async Task ShouldReturnBadRequestArgumentNullException()
+        public void ShouldReturnBadRequestArgumentNullException()
         {
             var mediatrMock = new Mock<IMediator>();
             mediatrMock

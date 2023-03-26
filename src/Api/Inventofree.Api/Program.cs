@@ -24,6 +24,7 @@ namespace Inventofree.Api
                     connectionString: config.GetConnectionString("Default"),
                     sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true},
                     restrictedToMinimumLevel:LogEventLevel.Warning)
+                .MinimumLevel.Information()
                 .CreateLogger();
             
             builder.UseSerilog(); 

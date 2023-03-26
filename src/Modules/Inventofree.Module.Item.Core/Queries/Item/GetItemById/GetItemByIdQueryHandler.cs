@@ -23,7 +23,10 @@ namespace Inventofree.Module.Item.Core.Queries.Item.GetItemById
 
         public async Task<ItemDto> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
         {
-            var item = await _context.Items.Include(a => a.Category).FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
+            var item = await _context.Items
+                .Include(a => a.Category)
+                .Include(a => a.Price)
+                .FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
             if (item == null) 
                 throw new Exception(ItemErrorMessages.NotFound);
             

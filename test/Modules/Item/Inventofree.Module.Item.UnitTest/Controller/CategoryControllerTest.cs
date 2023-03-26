@@ -55,7 +55,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
         
         [Fact]
-        public async Task ShouldReturnBadRequestResultCategoryByName()
+        public void ShouldReturnBadRequestResultCategoryByName()
         {
             var mediatrMock = new Mock<IMediator>();
 
@@ -71,7 +71,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
         
         [Fact]
-        public async Task ShouldReturnBadRequestResultCategoryById()
+        public void ShouldReturnBadRequestResultCategoryById()
         {
             var mediatrMock = new Mock<IMediator>();
 
@@ -178,7 +178,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestCategoryWithTheSameNameExists()
+        public void ShouldReturnBadRequestCategoryWithTheSameNameExists()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new AddCategoryCommand()
@@ -221,7 +221,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestItemNotFound()
+        public void ShouldReturnBadRequestItemNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
             var command = new UpdateCategoryCommand()
@@ -263,7 +263,7 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         }
 
         [Fact]
-        public async Task ShouldReturnBadRequestDeleteCategoryNotFound()
+        public void ShouldReturnBadRequestDeleteCategoryNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
 

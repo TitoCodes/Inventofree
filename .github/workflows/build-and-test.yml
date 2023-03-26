@@ -26,38 +26,34 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Install dependencies
+      - name: Setup SonarQube
+        run: |
+           echo "sonar.host.url= ${{ secrets.SONAR_HOST_URL }}" >> $GITHUB_ENV
+           echo "sonar.login=${{ secrets.SONAR_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
 
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal
-      - name: Cache SonarQube packages
-        uses: actions/cache@v1
+      - name: Run Unit Tests
+        run: dotnet test --logger trx --results-directory ./TestResults --configuration Release
+
+      - name: Run SonarScanner
+        run: .sonar/sonar-scanner/bin/sonar-scanner \
+          -Dsonar.projectKey=Inventofree \
+          -Dsonar.sources=. \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload SonarQube report
+        uses: actions/upload-artifact@v2
         with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache SonarQube scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v1
+          name: sonarqube-report
+          path: .sonarqube/out/sonar-report.json
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
         with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-      - name: Install SonarQube scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          mkdir -Path .\.sonar\scanner -ItemType Directory
-          --tool-path dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Inventofree" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
-          dotnet build
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          name: test-results
+          path: TestResults/*.trx

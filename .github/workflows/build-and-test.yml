@@ -51,9 +51,13 @@ jobs:
       - name: Install ReportGenerator tool
         run: |
           dotnet tool install --global JetBrains.dotCover.GlobalTool
-      - name: Build and analyze
+      - name: Build, Test and analyze
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"TitoCodes_Inventofree" /o:"titocodes" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html
-          dotnet build
-          dotnet dotcover test --dcReportType=HTML --dcOutput=dotCover.Output.html
-          ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"TitoCodes_Inventofree" /o:"titocodes" 
+              /d:sonar.login="${{ secrets.SONAR_TOKEN }}" 
+              /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+              /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html
+          dotnet build –no-incremental
+          dotnet dotcover test --dcReportType=HTML
+          ./.sonar/scanner/dotnet-sonarscanner end 
+              /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

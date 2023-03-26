@@ -44,9 +44,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{90AB1EE5-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Item", "Item", "{7D837369-D436-4276-85B2-33418DC67993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.UnitTest", "test\Modules\Item\Inventofree.Module.Item.UnitTest\Inventofree.Module.Item.UnitTest.csproj", "{71C22B84-1993-44C3-9DC6-8F34F49371B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.Tests", "test\Modules\Item\Inventofree.Module.Item.Tests\Inventofree.Module.Item.Tests.csproj", "{71C22B84-1993-44C3-9DC6-8F34F49371B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User.UnitTest", "test\Modules\Item\Inventofree.Module.User.UnitTest\Inventofree.Module.User.UnitTest.csproj", "{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User.Tests", "test\Modules\Item\Inventofree.Module.User.Tests\Inventofree.Module.User.Tests.csproj", "{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

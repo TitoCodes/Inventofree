@@ -50,7 +50,7 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
       - name: Build and analyze
         run: |
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"TitoCodes_Inventofree" /o:"titocodes" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}" /d:sonar.msbuild.testProjectPattern="*.UnitTest"
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"TitoCodes_Inventofree" /o:"titocodes" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           dotnet test
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

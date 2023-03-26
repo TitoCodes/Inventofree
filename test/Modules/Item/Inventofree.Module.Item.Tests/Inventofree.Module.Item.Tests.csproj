@@ -4,6 +4,8 @@
         <TargetFramework>net6.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>Inventofree.Module.Item.UnitTest</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

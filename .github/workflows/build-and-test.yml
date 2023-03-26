@@ -52,5 +52,5 @@ jobs:
         run: |
           ./.sonar/scanner/dotnet-sonarscanner begin /k:"TitoCodes_Inventofree" /o:"titocodes" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
-          dotnet test
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./coverage/
           ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

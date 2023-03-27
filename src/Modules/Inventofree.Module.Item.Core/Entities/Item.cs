@@ -11,7 +11,6 @@ namespace Inventofree.Module.Item.Core.Entities
         public long? CategoryId { get; set; }
         public long? PriceId { get; set; }
         public Category Category { get; set; }
-        
         public Price Price { get; set; }
     }
 }

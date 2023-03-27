@@ -29,7 +29,6 @@ namespace Inventofree.Module.Item.Core.Command.Item.AddItem
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
                 throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
 
-
             var user = await _userDbContext.Users.FirstOrDefaultAsync(a => a.Id == command.CreatedBy,
                 cancellationToken);
 

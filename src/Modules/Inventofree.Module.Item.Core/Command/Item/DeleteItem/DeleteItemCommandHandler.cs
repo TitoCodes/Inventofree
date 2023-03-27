@@ -20,12 +20,16 @@ namespace Inventofree.Module.Item.Core.Command.Item.DeleteItem
         public async Task<Unit> Handle(DeleteItemCommand command, CancellationToken cancellationToken)
         {
             var existingItem =
-                await _itemDbContext.Items.FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
+                await _itemDbContext
+                    .Items
+                    .Include(a => a.Price)
+                    .FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             if (existingItem == null)
                 throw new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Item)));
 
-
             _itemDbContext.Items.Remove(existingItem);
+            if (existingItem.Price != null)
+                _itemDbContext.Prices.Remove(existingItem.Price);
             await _itemDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

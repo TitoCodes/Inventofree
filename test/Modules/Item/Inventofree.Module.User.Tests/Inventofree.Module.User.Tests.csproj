@@ -34,4 +34,10 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>**</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
 </Project>

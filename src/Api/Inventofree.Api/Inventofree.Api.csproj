@@ -20,8 +20,4 @@
       <ProjectReference Include="..\..\Modules\Inventofree.Module.User\Inventofree.Module.User.csproj" />
       <ProjectReference Include="..\..\Shared\Inventofree.Shared.Infrastructure\Inventofree.Shared.Infrastructure.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
 </Project>

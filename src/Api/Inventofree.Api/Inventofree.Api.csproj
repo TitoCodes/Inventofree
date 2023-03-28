@@ -22,6 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>Program.cs, Startup.cs</Value>
+        </SonarQubeSetting>
     </ItemGroup>
 </Project>

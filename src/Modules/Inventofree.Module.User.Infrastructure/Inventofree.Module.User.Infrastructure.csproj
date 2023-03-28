@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <SonarQubeSetting Include="sonar.coverage.exclusions">
-            <Value>Extensions/ServiceCollectionExtension.cs, Persistence/Migrations/**.cs, UserDbContext.cs</Value>
+            <Value>Extensions/ServiceCollectionExtensions.cs, Persistence/Migrations/**.cs, UserDbContext.cs</Value>
         </SonarQubeSetting>
     </ItemGroup>
 

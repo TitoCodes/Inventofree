@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <SonarQubeSetting Include="sonar.coverage.exclusions">
-            <Value>ModuleExtension.cs</Value>
+            <Value>ModuleExtensions.cs</Value>
         </SonarQubeSetting>
     </ItemGroup>
 

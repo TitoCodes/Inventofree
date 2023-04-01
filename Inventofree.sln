@@ -48,6 +48,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User.Tests", "test\Modules\Item\Inventofree.Module.User.Tests\Inventofree.Module.User.Tests.csproj", "{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuditTrail", "AuditTrail", "{A8FB42B8-5FE2-4F4D-9333-4F063C767EF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTrail.Core", "src\Modules\Inventofree.Module.AuditTrail.Core\Inventofree.Module.AuditTrail.Core.csproj", "{660FE6A5-0C57-41E7-806A-7D01443799F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTrail.Infrastructure", "src\Modules\Inventofree.Module.AuditTrail.Infrastructure\Inventofree.Module.AuditTrail.Infrastructure.csproj", "{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTrail", "src\Modules\Inventofree.Module.AuditTrail\Inventofree.Module.AuditTrail.csproj", "{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +110,18 @@ Global
 		{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660FE6A5-0C57-41E7-806A-7D01443799F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660FE6A5-0C57-41E7-806A-7D01443799F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660FE6A5-0C57-41E7-806A-7D01443799F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660FE6A5-0C57-41E7-806A-7D01443799F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0A12F967-31F9-430A-8575-3D83BE0BF71D} = {B3242C85-5010-4B5D-9592-8649A2F0EAFD}
@@ -126,5 +146,9 @@ Global
 		{7D837369-D436-4276-85B2-33418DC67993} = {164776D2-9319-4E00-9DCB-2F3D218DC0C4}
 		{71C22B84-1993-44C3-9DC6-8F34F49371B8} = {7D837369-D436-4276-85B2-33418DC67993}
 		{B3F4AB1C-1367-4CCC-8EE9-7F5925688B0A} = {90AB1EE5-1FE2-4B61-9E58-11FE68DC0E94}
+		{A8FB42B8-5FE2-4F4D-9333-4F063C767EF0} = {BF290312-8CCE-4FF9-8A71-06B8F6888DED}
+		{660FE6A5-0C57-41E7-806A-7D01443799F5} = {A8FB42B8-5FE2-4F4D-9333-4F063C767EF0}
+		{6ACCCB2A-3251-46FE-9D2D-A2B360620FF2} = {A8FB42B8-5FE2-4F4D-9333-4F063C767EF0}
+		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC} = {A8FB42B8-5FE2-4F4D-9333-4F063C767EF0}
 	EndGlobalSection
 EndGlobal

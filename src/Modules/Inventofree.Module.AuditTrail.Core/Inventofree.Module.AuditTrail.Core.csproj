@@ -22,10 +22,19 @@
 
     <ItemGroup>
       <Compile Remove="Inventofree.Module.AuditTrail.Core\**" />
+      <Compile Update="Resources\AuditTrailErrorMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ItemErrorMessages.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="Inventofree.Module.AuditTrail.Core\**" />
+      <EmbeddedResource Update="Resources\AuditTrailErrorMessages.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>AuditTrailErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>

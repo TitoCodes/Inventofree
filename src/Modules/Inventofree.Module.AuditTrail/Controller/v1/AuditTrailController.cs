@@ -19,14 +19,14 @@ public class AuditTrailController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<AuditTrailDto>>> GetAllAuditTrailListAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllAuditTrailListAsync(CancellationToken cancellationToken)
     {
         var item = await _mediator.Send(new GetAllAuditTrailQuery(), cancellationToken);
         return Ok(item);
     }
     
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<AuditTrailDto>> GetAuditTrailByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAuditTrailByIdAsync(int id, CancellationToken cancellationToken)
     {
         var item = await _mediator.Send(new GetAuditTrailByIdQuery() { Id = id }, cancellationToken);
         return Ok(item);

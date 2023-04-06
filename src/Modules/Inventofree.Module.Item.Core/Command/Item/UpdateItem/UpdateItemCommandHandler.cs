@@ -29,21 +29,18 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
                 throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
-
-
+            
             var user = await _userDbContext.Users.AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == command.UpdatedBy, cancellationToken);
 
             if (user == null)
                 throw new Exception(UserErrorMessages.UserNotFound);
 
-
             var existingItem =
                 await _itemDbContext.Items.FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             if (existingItem == null)
                 throw new Exception(ItemErrorMessages.NotFound);
-
-
+            
             existingItem.Name = command.Name;
             existingItem.Detail = command.Detail;
             existingItem.ModifiedDate = DateTimeOffset.UtcNow;

@@ -1,5 +1,5 @@
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.AddAuditTrail;
-using Inventofree.Module.AuditTrail.Core.Dto.AuditTrail;
+using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.UpdateAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
 using MediatR;
@@ -36,5 +36,12 @@ public class AuditTrailController : ControllerBase
     public async Task<IActionResult> AddAuditTrailAsync(AddAuditTrailCommand command, CancellationToken cancellationToken)
     {
         return Ok(await _mediator.Send(command, cancellationToken));
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> UpdateAuditTrailAsync(UpdateAuditTrailCommand command, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(command, cancellationToken);
+        return NoContent();
     }
 }

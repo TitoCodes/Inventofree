@@ -4,14 +4,16 @@ using Inventofree.Module.AuditTrail.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Inventofree.Module.AuditTrail.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AuditTrailDbContext))]
-    partial class AuditTrailDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230406131932_added_new_property_in_audittrail_table")]
+    partial class added_new_property_in_audittrail_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

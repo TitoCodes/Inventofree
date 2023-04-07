@@ -1,4 +1,5 @@
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.AddAuditTrail;
+using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.DeleteAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.UpdateAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
@@ -42,6 +43,13 @@ public class AuditTrailController : ControllerBase
     public async Task<IActionResult> UpdateAuditTrailAsync(UpdateAuditTrailCommand command, CancellationToken cancellationToken)
     {
         await _mediator.Send(command, cancellationToken);
+        return NoContent();
+    }
+    
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteAuditTrailAsync(int id, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DeleteAuditTrailCommand() { Id = id }, cancellationToken);
         return NoContent();
     }
 }

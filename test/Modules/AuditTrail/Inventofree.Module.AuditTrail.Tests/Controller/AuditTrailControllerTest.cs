@@ -39,7 +39,7 @@ public class AuditTrailControllerTest
 
         var sut = new AuditTrailController(mediatrMock.Object);
 
-        var result = await sut.GetAllAuditTrailListAsync(It.IsAny<CancellationToken>());
+        var result = await sut.GetAllAuditTrailListAsync(It.IsAny<string>(),It.IsAny<CancellationToken>());
         var okResult = result as OkObjectResult;
 
         mediatrMock.Verify(a => a.Send(It.IsAny<GetAllAuditTrailQuery>(), It.IsAny<CancellationToken>()), Times.Once);

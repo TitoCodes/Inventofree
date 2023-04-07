@@ -20,13 +20,22 @@ public class GetAllAuditTrailHandler: IRequestHandler<GetAllAuditTrailQuery, IRe
     
     public async Task<IReadOnlyCollection<AuditTrailDto>> Handle(GetAllAuditTrailQuery request, CancellationToken cancellationToken)
     {
-        var auditTrailList = await _context.AuditTrails
-            .OrderBy(a => a.Id)
-            .ToListAsync(cancellationToken);
+        IQueryable<Entities.AuditTrail> auditTrailList;
+        if (!string.IsNullOrEmpty(request.SearchString))
+            auditTrailList = _context.AuditTrails
+                .Where(a=> a.Action != null && a.Action.Contains(request.SearchString)
+                           || a.Details != null && a.Details.Contains(request.SearchString));
+        else
+            auditTrailList = _context.AuditTrails;
+        
         if (!auditTrailList.Any()) 
             throw new Exception(AuditTrailErrorMessages.AuditTrailListNull);
-            
-        var result = auditTrailList.Select(a => _mapper.Map<AuditTrailDto>(a)).ToList();
+        
+        var result = await auditTrailList
+            .OrderBy(a => a.Id)
+            .Select(a => _mapper.Map<AuditTrailDto>(a))
+            .ToListAsync(cancellationToken);
+        
         return result;
     }
 }

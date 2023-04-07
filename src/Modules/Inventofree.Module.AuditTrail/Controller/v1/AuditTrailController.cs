@@ -21,9 +21,9 @@ public class AuditTrailController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAllAuditTrailListAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllAuditTrailListAsync(string? searchString, CancellationToken cancellationToken)
     {
-        var item = await _mediator.Send(new GetAllAuditTrailQuery(), cancellationToken);
+        var item = await _mediator.Send(new GetAllAuditTrailQuery(){ SearchString = searchString}, cancellationToken);
         return Ok(item);
     }
     

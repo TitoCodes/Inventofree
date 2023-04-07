@@ -5,6 +5,7 @@ using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.UpdateAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Dto.AuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
+using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetDirectoryByCreatedDateRange;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,11 @@ namespace Inventofree.Module.AuditTrail.Tests.Controller;
 
 public class AuditTrailControllerTest
 {
-    //TODO: Complete unit test for AuditTrailController
     [Fact]
     public async Task ShouldReturnOksResultAuditTrailList()
     {
         var mediatrMock = new Mock<IMediator>();
-        var expectedItems = new List<AuditTrailDto>()
+        var expectedAuditTrailList = new List<AuditTrailDto>()
         {
             new()
             {
@@ -34,7 +34,7 @@ public class AuditTrailControllerTest
 
         mediatrMock
             .Setup(a => a.Send(It.IsAny<GetAllAuditTrailQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(expectedItems)
+            .ReturnsAsync(expectedAuditTrailList)
             .Verifiable();
 
         var sut = new AuditTrailController(mediatrMock.Object);
@@ -46,15 +46,15 @@ public class AuditTrailControllerTest
         okResult.ShouldNotBeNull();
         okResult.Value.ShouldNotBeNull();
         okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var items = okResult.Value as IEnumerable<AuditTrailDto>;
-        items.ShouldBeEquivalentTo(expectedItems);
+        var auditTrailList = okResult.Value as IEnumerable<AuditTrailDto>;
+        auditTrailList.ShouldBeEquivalentTo(expectedAuditTrailList);
     }
 
     [Fact]
     public async Task ShouldReturnOksResultAddAuditTrail()
     {
         var mediatrMock = new Mock<IMediator>();
-        var expectedItem = new AuditTrailDto()
+        var expectedAuditTrail = new AuditTrailDto()
         {
             Details = "Sample Details",
             Action = "John Doe Updated an Item",
@@ -64,7 +64,7 @@ public class AuditTrailControllerTest
 
         mediatrMock
             .Setup(a => a.Send(It.IsAny<AddAuditTrailCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(expectedItem.Id)
+            .ReturnsAsync(expectedAuditTrail.Id)
             .Verifiable();
 
         var sut = new AuditTrailController(mediatrMock.Object);
@@ -76,14 +76,14 @@ public class AuditTrailControllerTest
         okResult.ShouldNotBeNull();
         okResult.Value.ShouldNotBeNull();
         okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        okResult.Value.ShouldBeEquivalentTo(expectedItem.Id);
+        okResult.Value.ShouldBeEquivalentTo(expectedAuditTrail.Id);
     }
     
     [Fact]
     public async Task ShouldReturnOksResultAuditTrailById()
     {
         var mediatrMock = new Mock<IMediator>();
-        var expectedItems = new AuditTrailDto()
+        var expectedAuditTrail = new AuditTrailDto()
         {
             Details = "Sample Details",
             Action = "John Doe Updated an Item",
@@ -93,7 +93,7 @@ public class AuditTrailControllerTest
 
         mediatrMock
             .Setup(a => a.Send(It.IsAny<GetAuditTrailByIdQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(expectedItems)
+            .ReturnsAsync(expectedAuditTrail)
             .Verifiable();
 
         var sut = new AuditTrailController(mediatrMock.Object);
@@ -105,8 +105,8 @@ public class AuditTrailControllerTest
         okResult.ShouldNotBeNull();
         okResult.Value.ShouldNotBeNull();
         okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        var items = okResult.Value as AuditTrailDto;
-        items.ShouldBeEquivalentTo(expectedItems);
+        var auditTrail = okResult.Value as AuditTrailDto;
+        auditTrail.ShouldBeEquivalentTo(expectedAuditTrail);
     }
 
     [Fact]
@@ -155,5 +155,38 @@ public class AuditTrailControllerTest
             Times.Once);
         noContentResult.ShouldNotBeNull();
         noContentResult.StatusCode.ShouldBe(StatusCodes.Status204NoContent);
+    }
+    
+    [Fact]
+    public async Task ShouldReturnOksResultAuditTrailByCreatedDateRange()
+    {
+        var mediatrMock = new Mock<IMediator>();
+        var expectedAuditTrailList = new List<AuditTrailDto>()
+        {
+            new()
+            {
+                Details = "Sample Details",
+                Action = "John Doe Updated an Item",
+                CreatedBy = 1,
+                Id = 1
+            }
+        };
+
+        mediatrMock
+            .Setup(a => a.Send(It.IsAny<GetDirectoryByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedAuditTrailList)
+            .Verifiable();
+
+        var sut = new AuditTrailController(mediatrMock.Object);
+
+        var result = await sut.GetAuditTrailByCreatedDateRangeAsync(It.IsAny<DateTime>(),It.IsAny<DateTime>(), It.IsAny<CancellationToken>());
+        var okResult = result as OkObjectResult;
+
+        mediatrMock.Verify(a => a.Send(It.IsAny<GetDirectoryByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+        okResult.ShouldNotBeNull();
+        okResult.Value.ShouldNotBeNull();
+        okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
+        var auditTrailList = okResult.Value as List<AuditTrailDto>;
+        auditTrailList.ShouldBeEquivalentTo(expectedAuditTrailList);
     }
 }

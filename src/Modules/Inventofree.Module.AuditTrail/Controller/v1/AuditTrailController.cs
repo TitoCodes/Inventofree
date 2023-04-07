@@ -3,6 +3,7 @@ using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.DeleteAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.UpdateAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
+using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetDirectoryByCreatedDateRange;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,13 @@ public class AuditTrailController : ControllerBase
     {
         var item = await _mediator.Send(new GetAuditTrailByIdQuery() { Id = id }, cancellationToken);
         return Ok(item);
+    }
+    
+    [HttpGet("{startDate:datetime}/{endDate:datetime}")]
+    public async Task<IActionResult> GetAuditTrailByCreatedDateRangeAsync(DateTime startDate, DateTime endDate , CancellationToken cancellationToken)
+    {
+        var auditTrailList = await _mediator.Send(new GetDirectoryByCreatedDateRangeQuery() { StartDate  = startDate, EndDate = endDate}, cancellationToken);
+        return Ok(auditTrailList);
     }
     
     [HttpPost]

@@ -27,11 +27,20 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>ItemErrorMessages.resx</DependentUpon>
       </Compile>
+      <Compile Update="Resources\AuditTrailSystemMessages.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AuditTrailSystemMessages.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Remove="Inventofree.Module.AuditTrail.Core\**" />
       <EmbeddedResource Update="Resources\AuditTrailErrorMessages.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>AuditTrailErrorMessages.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\AuditTrailSystemMessages.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>AuditTrailErrorMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>

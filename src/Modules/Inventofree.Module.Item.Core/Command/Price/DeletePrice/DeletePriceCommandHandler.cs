@@ -23,7 +23,7 @@ public class DeletePriceCommandHandler: IRequestHandler<DeletePriceCommand, Unit
         var price = await _itemDbContext.Prices.FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
         
         if(price == null)
-            throw new System.Exception("Price not found");
+            throw new System.InvalidOperationException("Price not found");
         _itemDbContext.Prices.Remove(price);
         
         await _itemDbContext.SaveChangesAsync(cancellationToken);

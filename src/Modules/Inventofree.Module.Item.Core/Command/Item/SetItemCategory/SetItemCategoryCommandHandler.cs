@@ -26,20 +26,20 @@ namespace Inventofree.Module.Item.Core.Command.Item.SetItemCategory
             var existingItem =
                 await _itemDbContext.Items.FirstOrDefaultAsync(c => c.Id == command.ItemId, cancellationToken);
             if (existingItem == null)
-                throw new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Item)));
+                throw new InvalidOperationException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Item)));
 
 
             var user = await _userDbContext.Users.FirstOrDefaultAsync(a => a.Id == command.UserId,
                 cancellationToken);
 
             if (user == null)
-                throw new Exception(UserErrorMessages.UserNotFound);
+                throw new InvalidOperationException(UserErrorMessages.UserNotFound);
 
 
             var existingCategory =
                 await _itemDbContext.Categories.FirstOrDefaultAsync(c => c.Id == command.CategoryId, cancellationToken);
             if (existingCategory == null)
-                throw new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+                throw new InvalidOperationException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
 
 
             existingItem.CategoryId = command.CategoryId;

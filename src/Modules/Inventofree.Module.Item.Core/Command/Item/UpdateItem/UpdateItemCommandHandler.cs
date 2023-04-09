@@ -41,14 +41,14 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
         public async Task<bool> Handle(UpdateItemCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
-                throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
+                throw new InvalidOperationException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
             
             var user = await _userDbContext.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == command.UpdatedBy, cancellationToken);
 
             if (user == null)
-                throw new Exception(UserErrorMessages.UserNotFound);
+                throw new InvalidOperationException(UserErrorMessages.UserNotFound);
 
             var existingItem =
                 await _itemDbContext.Items
@@ -56,7 +56,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
                     .FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             
             if (existingItem == null)
-                throw new Exception(ItemErrorMessages.NotFound);
+                throw new InvalidOperationException(ItemErrorMessages.NotFound);
             
             var serializedOldValues = JsonSerializer.Serialize(existingItem);
             existingItem.Name = command.Name;
@@ -79,7 +79,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
             var serializedNewValues = JsonSerializer.Serialize(existingItem);
             var addAuditTrailRecord = new AddAuditTrailCommand()
             {
-                Action = string.Format(AuditTrailSystemMessages.FormatAction, user.Id, existingItem.Id),
+                Action = string.Format(AuditTrailSystemMessages.FormatAction, user.Id, "updated", existingItem.Id),
                 Details = string.Format(AuditTrailSystemMessages.FormatDetails, serializedOldValues, serializedNewValues),
                 CreatedBy = user.Id
             };

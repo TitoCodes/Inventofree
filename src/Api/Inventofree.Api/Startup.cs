@@ -1,5 +1,5 @@
-using System;
 using Inventofree.Api.Middleware;
+using Inventofree.Module.AuditTrail;
 using Inventofree.Module.Item;
 using Inventofree.Module.User;
 using Inventofree.Shared.Infrastructure.Extensions;
@@ -27,6 +27,7 @@ namespace Inventofree.Api
             services.AddControllers();
             services.AddSharedInfrastructure(Configuration);
             services.AddItemModule(Configuration);
+            services.AddAuditTrailModule(Configuration);
             services.AddUserModule(Configuration);
             services.AddSwaggerGen(c =>
             {

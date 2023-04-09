@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\Inventofree.Shared.Core\Inventofree.Shared.Core.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.AuditTrail.Core\Inventofree.Module.AuditTrail.Core.csproj" />
       <ProjectReference Include="..\Inventofree.Module.User.Core\Inventofree.Module.User.Core.csproj" />
     </ItemGroup>
 

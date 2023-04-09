@@ -2,28 +2,18 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.User.Core.Abstractions;
+using Inventofree.Module.User.Core.Command.User.CreateUser;
 using Inventofree.Module.User.Core.Helpers;
 using Inventofree.Module.User.Core.Resources;
 using Inventofree.Shared.Core.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Inventofree.Module.User.Core.Command.User.InsertUser
+namespace Inventofree.Module.User.Core.Command.User.InsertUser;
+
+public class CreateUserCommandHandler
 {
-    public class InsertUserCommand : IRequest<long>
-    {
-        public string Email { get; set; }
-        public string Firstname { get; set; }
-
-        public string Password { get; set; }
-
-        public string ConfirmPassword { get; set; }
-        public string Middlename { get; set; }
-        
-        public string Lastname { get; set; }
-    }
-    
-    public class InsertUserCommandHandler : IRequestHandler<InsertUserCommand, long>
+    public class InsertUserCommandHandler : IRequestHandler<CreateUserCommand, long>
     {
         private readonly IUserDbContext _userDbContext;
 
@@ -32,7 +22,7 @@ namespace Inventofree.Module.User.Core.Command.User.InsertUser
             _userDbContext = userDbContext;
         }
         
-        public async Task<long> Handle(InsertUserCommand command, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
             if (command == null)
             {
@@ -41,17 +31,17 @@ namespace Inventofree.Module.User.Core.Command.User.InsertUser
             
             if (!UtilityHelper.IsValidEmail(command.Email))
             {
-                throw new Exception(UserErrorMessages.InvalidEmailFormat);    
+                throw new InvalidOperationException(UserErrorMessages.InvalidEmailFormat);    
             }
             
             if (await _userDbContext.Users.AnyAsync(c => c.Email == command.Email, cancellationToken))
             {
-                throw new Exception(UserErrorMessages.UserAlreadyExists);
+                throw new InvalidOperationException(UserErrorMessages.UserAlreadyExists);
             }
 
             if (!command.Password.Equals(command.ConfirmPassword))
             {
-                throw new Exception(UserErrorMessages.PasswordDoesntMatch);
+                throw new InvalidOperationException(UserErrorMessages.PasswordDoesntMatch);
             }
 
             var salt = EncryptionHelper.GenerateSalt();
@@ -71,7 +61,5 @@ namespace Inventofree.Module.User.Core.Command.User.InsertUser
             await _userDbContext.SaveChangesAsync(cancellationToken);
             return item.Id;
         }
-        
-        
     }
 }

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Inventofree.Shared.Infrastructure\Inventofree.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.AuditTrail.Core\Inventofree.Module.AuditTrail.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>Extensions/ServiceCollectionExtensions.cs, Persistence/Migrations/**.cs, AuditTrailDbContext.cs</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Inventofree.Module.AuditTrail.Infrastructure\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Inventofree.Module.AuditTrail.Infrastructure\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Inventofree.Module.AuditTrail.Infrastructure\**" />
+    </ItemGroup>
+</Project>

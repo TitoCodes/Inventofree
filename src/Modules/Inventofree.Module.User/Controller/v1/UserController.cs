@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Inventofree.Module.User.Core.Command.User.CreateUser;
 using Inventofree.Module.User.Core.Command.User.InsertUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace Inventofree.Module.User.Controller.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertUser(InsertUserCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> InsertUser(CreateUserCommand command, CancellationToken cancellationToken)
         {
             return Ok(await _mediator.Send(command, cancellationToken));
         }

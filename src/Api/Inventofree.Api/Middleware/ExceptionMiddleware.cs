@@ -30,7 +30,7 @@ namespace Inventofree.Api.Middleware
             }
         }
 
-        private async Task ReturnErrorResponse(HttpContext context, string errorMessage)
+        private static async Task ReturnErrorResponse(HttpContext context, string errorMessage)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

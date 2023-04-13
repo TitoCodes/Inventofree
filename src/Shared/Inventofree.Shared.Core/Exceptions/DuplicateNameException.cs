@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Inventofree.Shared.Core.Exceptions;
 
 [Serializable]
-public class DuplicateNameException : Exception, ISerializable
+public class DuplicateNameException : Exception
 {
     public DuplicateNameException() { }
 

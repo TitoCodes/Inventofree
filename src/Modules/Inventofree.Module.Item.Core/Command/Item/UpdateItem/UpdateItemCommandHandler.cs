@@ -32,8 +32,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
             _mediator = mediator;
             _mapper = mapper;
         }
-
-        //#TODO: Handle delete price command and implement transaction
+        
         public async Task<bool> Handle(UpdateItemCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))

@@ -25,7 +25,7 @@ namespace Inventofree.Api.Middleware
             }
             catch (Exception ex)
             {
-                _logger.LogError(message: ex.Message, exception: ex);
+                _logger.LogError(exception: ex, message:"An error occurred: {ErrorMessage}", ex.Message);
                 await ReturnErrorResponse(context, errorMessage:ex.Message);
             }
         }

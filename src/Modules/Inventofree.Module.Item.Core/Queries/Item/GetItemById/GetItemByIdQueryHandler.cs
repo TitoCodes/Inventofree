@@ -28,7 +28,7 @@ namespace Inventofree.Module.Item.Core.Queries.Item.GetItemById
                 .Include(a => a.Price)
                 .FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
             if (item == null) 
-                throw new Exception(ItemErrorMessages.NotFound);
+                throw new NullReferenceException(ItemErrorMessages.NotFound);
             
             var result = _mapper.Map<ItemDto>(item);
             return result;

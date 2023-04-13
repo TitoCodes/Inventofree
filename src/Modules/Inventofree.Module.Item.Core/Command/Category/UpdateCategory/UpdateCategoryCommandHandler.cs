@@ -6,6 +6,7 @@ using Inventofree.Module.Item.Core.Abstractions;
 using Inventofree.Module.Item.Core.Resources;
 using Inventofree.Module.User.Core.Abstractions;
 using Inventofree.Module.User.Core.Resources;
+using Inventofree.Shared.Core.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,21 +26,18 @@ namespace Inventofree.Module.Item.Core.Command.Category.UpdateCategory
         public async Task<bool> Handle(UpdateCategoryCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
-                throw new Exception(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Category)));
-
+                throw new DuplicateNameException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Category)));
 
             var user = await _userDbContext.Users.AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == command.UpdatedBy, cancellationToken);
             if (user == null)
-                throw new Exception(UserErrorMessages.UserNotFound);
-
-
+                throw new NullReferenceException(UserErrorMessages.UserNotFound);
+            
             var existingCategory =
                 await _itemDbContext.Categories.FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             if (existingCategory == null)
-                throw new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
-
-
+                throw new NullReferenceException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+            
             existingCategory.Name = command.Name;
             existingCategory.Description = command.Description;
             existingCategory.ModifiedDate = DateTimeOffset.UtcNow;

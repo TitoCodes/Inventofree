@@ -24,7 +24,7 @@ namespace Inventofree.Module.Item.Core.Queries.Category.GetAllCategories
         {
             var categories = await _context.Categories.OrderBy(a => a.Id).ToListAsync(cancellationToken);
             if (categories == null) 
-                throw new Exception(ItemErrorMessages.CategoriesNotFound);
+                throw new NullReferenceException(ItemErrorMessages.CategoriesNotFound);
             
             return categories;
         }

@@ -21,7 +21,7 @@ namespace Inventofree.Module.Item.Core.Queries.Category.GetCategoryByName
         {
             var category = await _context.Categories.FirstOrDefaultAsync(a => a.Name == request.Name, cancellationToken);
             if (category == null) 
-                throw new Exception(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+                throw new NullReferenceException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
             
             return category;
         }

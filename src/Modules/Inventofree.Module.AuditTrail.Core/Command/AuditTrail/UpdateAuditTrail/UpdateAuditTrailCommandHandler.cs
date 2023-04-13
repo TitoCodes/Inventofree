@@ -24,12 +24,12 @@ public class UpdateAuditTrailCommandHandler: IRequestHandler<UpdateAuditTrailCom
             .FirstOrDefaultAsync(a => a.Id == request.UpdatedBy, cancellationToken);
 
         if (user == null)
-            throw new NullReferenceException(UserErrorMessages.UserNotFound);
+            throw new ArgumentNullException(UserErrorMessages.UserNotFound);
 
         var existingAuditTrail =
             await _auditTrailDbContext.AuditTrails.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
         if (existingAuditTrail == null)
-            throw new NullReferenceException(AuditTrailErrorMessages.AuditTrailNotFound);
+            throw new ArgumentNullException(AuditTrailErrorMessages.AuditTrailNotFound);
         
         existingAuditTrail.ModifiedDate = DateTimeOffset.UtcNow;
         existingAuditTrail.UpdatedBy = request.UpdatedBy;

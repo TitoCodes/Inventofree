@@ -29,7 +29,7 @@ public class GetAllAuditTrailHandler: IRequestHandler<GetAllAuditTrailQuery, IRe
             auditTrailList = _context.AuditTrails;
         
         if (!auditTrailList.Any()) 
-            throw new NullReferenceException(AuditTrailErrorMessages.AuditTrailListNull);
+            throw new ArgumentNullException(AuditTrailErrorMessages.AuditTrailListNull);
         
         var result = await auditTrailList
             .OrderBy(a => a.Id)

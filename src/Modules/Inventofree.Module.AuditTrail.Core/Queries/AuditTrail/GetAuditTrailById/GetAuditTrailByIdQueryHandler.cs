@@ -23,7 +23,7 @@ public class GetAuditTrailByIdHandler : IRequestHandler<GetAuditTrailByIdQuery, 
         var auditTrail = await _context.AuditTrails
             .FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
         if (auditTrail == null) 
-            throw new NullReferenceException(AuditTrailErrorMessages.AuditTrailNotFound);
+            throw new ArgumentNullException(AuditTrailErrorMessages.AuditTrailNotFound);
             
         var result = _mapper.Map<AuditTrailDto>(auditTrail);
         return result;

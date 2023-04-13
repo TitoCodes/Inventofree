@@ -31,12 +31,12 @@ namespace Inventofree.Module.Item.Core.Command.Category.UpdateCategory
             var user = await _userDbContext.Users.AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == command.UpdatedBy, cancellationToken);
             if (user == null)
-                throw new NullReferenceException(UserErrorMessages.UserNotFound);
+                throw new ArgumentNullException(UserErrorMessages.UserNotFound);
             
             var existingCategory =
                 await _itemDbContext.Categories.FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             if (existingCategory == null)
-                throw new NullReferenceException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+                throw new ArgumentNullException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
             
             existingCategory.Name = command.Name;
             existingCategory.Description = command.Description;

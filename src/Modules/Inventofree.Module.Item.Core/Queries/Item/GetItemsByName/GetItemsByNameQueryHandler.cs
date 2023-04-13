@@ -27,7 +27,7 @@ namespace Inventofree.Module.Item.Core.Queries.Item.GetItemsByName
         {
             var items = await _context.Items.Include(a => a.Category).Where(a => a.Name.Contains(request.Name)).ToListAsync(cancellationToken);
             if (!items.Any()) 
-                throw new Exception(ItemErrorMessages.ItemsNull);
+                throw new ArgumentNullException(ItemErrorMessages.ItemsNull);
             
             var result = items.Select(a => _mapper.Map<ItemDto>(a)).ToList();
             return result;

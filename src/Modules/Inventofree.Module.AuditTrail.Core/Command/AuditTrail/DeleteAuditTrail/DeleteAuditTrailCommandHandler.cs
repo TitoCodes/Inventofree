@@ -21,7 +21,7 @@ public class DeleteAuditTrailCommandHandler : IRequestHandler<DeleteAuditTrailCo
                 .AuditTrails
                 .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
         if (existingItem == null)
-            throw new Exception(string.Format(AuditTrailErrorMessages.AuditTrailNotFound, nameof(Entities.AuditTrail)));
+            throw new ArgumentNullException(string.Format(AuditTrailErrorMessages.AuditTrailNotFound, nameof(Entities.AuditTrail)));
 
         _auditTrailDbContext.AuditTrails.Remove(existingItem);
         await _auditTrailDbContext.SaveChangesAsync(cancellationToken);

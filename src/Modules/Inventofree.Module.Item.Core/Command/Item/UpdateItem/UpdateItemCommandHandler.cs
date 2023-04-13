@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Inventofree.Module.AuditTrail.Abstractions;
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.AddAuditTrail;
 using Inventofree.Module.Item.Core.Abstractions;
 using Inventofree.Module.Item.Core.Command.Price.DeletePrice;
@@ -19,25 +18,21 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
     {
         private readonly IItemDbContext _itemDbContext;
         private readonly IUserDbContext _userDbContext;
-        private readonly IAuditTrailDbContext _auditTrailDbContext;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
         public UpdateItemCommandHandler(
             IItemDbContext itemDbContext, 
             IUserDbContext userDbContext,
-            IAuditTrailDbContext auditTrailDbContext,
             IMediator mediator,
             IMapper mapper)
         {
             _itemDbContext = itemDbContext;
             _userDbContext = userDbContext;
-            _auditTrailDbContext = auditTrailDbContext;
             _mediator = mediator;
             _mapper = mapper;
         }
-
-        //#TODO: Handle delete price command and implement transaction
+        
         public async Task<bool> Handle(UpdateItemCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))

@@ -25,7 +25,7 @@ public class AddAuditTrailCommandHandler: IRequestHandler<AddAuditTrailCommand, 
             cancellationToken);
 
         if (user == null)
-            throw new Exception(UserErrorMessages.UserNotFound);
+            throw new ArgumentNullException(UserErrorMessages.UserNotFound);
 
         var auditTrail = _mapper.Map<Entities.AuditTrail>(request);
         await _auditTrailDbContext.AuditTrails.AddAsync(auditTrail, cancellationToken);

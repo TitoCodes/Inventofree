@@ -32,7 +32,7 @@ namespace Inventofree.Module.Item.Core.Queries.Item.GetAllItems
                 .OrderBy(a => a.Id)
                 .ToListAsync(cancellationToken);
             if (!items.Any()) 
-                throw new Exception(ItemErrorMessages.ItemsNull);
+                throw new ArgumentNullException(ItemErrorMessages.ItemsNull);
             
             var result = items.Select(a => _mapper.Map<ItemDto>(a)).ToList();
             return result;

@@ -61,12 +61,6 @@ namespace Inventofree.Module.User.UnitTest.Controller
         public void ShouldReturnBadRequestPasswordMismatch()
         {
             var mediatrMock = new Mock<IMediator>();
-            var command = new CreateUserCommand()
-            {
-                Email = "juan@delacruz.email",
-                Password = "weakpass",
-                ConfirmPassword = "ultraweak"
-            };
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<CreateUserCommand>(), It.IsAny<CancellationToken>()))

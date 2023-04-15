@@ -224,12 +224,6 @@ namespace Inventofree.Module.Item.UnitTest.Controller
         public void ShouldReturnBadRequestItemNotFound()
         {
             var mediatrMock = new Mock<IMediator>();
-            var command = new UpdateCategoryCommand()
-            {
-                Name = "Sample name",
-                Description = "Sample detail",
-                Id = 0
-            };
 
             mediatrMock
                 .Setup(a => a.Send(It.IsAny<UpdateCategoryCommand>(), It.IsAny<CancellationToken>()))

@@ -1,8 +1,11 @@
 name: build and test
 
 on:
+  push:
+    branches:
+      - develop
   pull_request:
-    branches: [ develop ]
+    types: [opened, synchronize, reopened]
     paths:
       - '**.cs'
       - '**.csproj'

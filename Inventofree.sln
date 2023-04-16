@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuditTrail", "AuditTrail", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTrail.Tests", "test\Modules\AuditTrail\Inventofree.Module.AuditTrail.Tests\Inventofree.Module.AuditTrail.Tests.csproj", "{09732005-DC2D-46DC-9386-F074FFF1FE34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTrail.Core.Tests", "test\Modules\AuditTrail\Inventofree.Module.AuditTrail.Core.Tests\Inventofree.Module.AuditTrail.Core.Tests.csproj", "{ED527B13-3DFC-415C-AEF3-B00A81995FD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,6 +132,10 @@ Global
 		{09732005-DC2D-46DC-9386-F074FFF1FE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09732005-DC2D-46DC-9386-F074FFF1FE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09732005-DC2D-46DC-9386-F074FFF1FE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED527B13-3DFC-415C-AEF3-B00A81995FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED527B13-3DFC-415C-AEF3-B00A81995FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED527B13-3DFC-415C-AEF3-B00A81995FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED527B13-3DFC-415C-AEF3-B00A81995FD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0A12F967-31F9-430A-8575-3D83BE0BF71D} = {B3242C85-5010-4B5D-9592-8649A2F0EAFD}
@@ -160,5 +166,6 @@ Global
 		{11C0F1AB-914B-4E40-A964-2C7FDDCCECFC} = {A8FB42B8-5FE2-4F4D-9333-4F063C767EF0}
 		{779323EA-D7CA-4E4F-B9ED-BDB450C90694} = {164776D2-9319-4E00-9DCB-2F3D218DC0C4}
 		{09732005-DC2D-46DC-9386-F074FFF1FE34} = {779323EA-D7CA-4E4F-B9ED-BDB450C90694}
+		{ED527B13-3DFC-415C-AEF3-B00A81995FD7} = {779323EA-D7CA-4E4F-B9ED-BDB450C90694}
 	EndGlobalSection
 EndGlobal

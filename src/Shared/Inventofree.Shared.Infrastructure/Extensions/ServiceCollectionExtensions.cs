@@ -20,16 +20,21 @@ namespace Inventofree.Shared.Infrastructure.Extensions
         public static IServiceCollection AddDatabaseContext<T>(this IServiceCollection services, IConfiguration config) where T : DbContext
         {
             var connectionString = config.GetConnectionString("Default");
-            services.AddMSSQL<T>(connectionString);
+            services.AddMssql<T>(connectionString);
             return services;
         }
         
-        private static IServiceCollection AddMSSQL<T>(this IServiceCollection services, string connectionString) where T : DbContext
+        private static IServiceCollection AddMssql<T>(this IServiceCollection services, string connectionString) where T : DbContext
         {
             services.AddDbContext<T>(m => m.UseSqlServer(connectionString, e => e.MigrationsAssembly(typeof(T).Assembly.FullName)));
             using var scope = services.BuildServiceProvider().CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<T>();
-            dbContext.Database.Migrate();
+            
+            if (dbContext.Database.IsSqlServer())
+            {
+                dbContext.Database.Migrate();
+            }
+            
             return services;
         }
     }

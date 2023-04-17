@@ -20,14 +20,11 @@ public class GetAllAuditTrailQueryTest
         var expectedAuditTrailDto = new List<AuditTrailDto>() { new AuditTrailDto() { Id = 1 } };
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>() { new Entities.AuditTrail() { Id = 1 } });
-        
-        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Entities.AuditTrail>()))
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new () { Id = 1, Action = "Action" , Details = "Details", UpdatedBy = 1, CreatedBy = 1, CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now} });
+        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Core.Entities.AuditTrail>()))
             .Returns(new AuditTrailDto() { Id = 1 });
-        
         var handler = new GetAllAuditTrailHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-
         var result = handler.Handle(new GetAllAuditTrailQuery() { SearchString = string.Empty },
             new CancellationToken(false));
         //Assert
@@ -44,14 +41,11 @@ public class GetAllAuditTrailQueryTest
         var expectedAuditTrailDto = new List<AuditTrailDto>() { new AuditTrailDto() { Id = 1, Action = "Sample action"} };
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>() { new Entities.AuditTrail() { Id = 1, Action = "Sample action"} });
-        
-        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Entities.AuditTrail>()))
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new () { Id = 1, Action = "Sample action", Details = "Details", UpdatedBy = 1, CreatedBy = 1, CreatedDate = DateTimeOffset.UtcNow, ModifiedDate = DateTimeOffset.UtcNow} });
+        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Core.Entities.AuditTrail>()))
             .Returns(new AuditTrailDto() { Id = 1, Action = "Sample action"});
-        
         var handler = new GetAllAuditTrailHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-
         var result = handler.Handle(new GetAllAuditTrailQuery() { SearchString = "Sample action" },
             new CancellationToken(false));
         //Assert
@@ -67,11 +61,9 @@ public class GetAllAuditTrailQueryTest
         var auditTrailDbContextMock = new Mock<IAuditTrailDbContext>();
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>());
-        
-        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Entities.AuditTrail>()))
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>());
+        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Core.Entities.AuditTrail>()))
             .Returns(new AuditTrailDto() { Id = 1 });
-        
         var handler = new GetAllAuditTrailHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
         //Assert

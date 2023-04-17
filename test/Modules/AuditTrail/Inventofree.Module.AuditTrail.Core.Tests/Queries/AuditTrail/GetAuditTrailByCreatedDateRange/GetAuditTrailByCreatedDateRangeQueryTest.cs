@@ -22,12 +22,10 @@ public class GetAuditTrailByCreatedDateRangeQueryTest
         var endDate = DateTimeOffset.Now.AddDays(1);
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>() { new Entities.AuditTrail() { Id = 1, CreatedDate = startDate } });
-        
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new () { Id = 1, CreatedDate = startDate } });
         mapperMock
-            .Setup(a => a.Map<IReadOnlyCollection<Entities.AuditTrail>,IReadOnlyCollection<AuditTrailDto>>(It.IsAny<IReadOnlyCollection<Entities.AuditTrail>>()))
+            .Setup(a => a.Map<IReadOnlyCollection<Core.Entities.AuditTrail>,IReadOnlyCollection<AuditTrailDto>>(It.IsAny<IReadOnlyCollection<Core.Entities.AuditTrail>>()))
             .Returns(new List<AuditTrailDto>() { new AuditTrailDto() { Id = 1 } });
-        
         var handler = new GetAuditTrailByCreatedDateRangeQueryHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
         var result = handler.Handle(new GetAuditTrailByCreatedDateRangeQuery() { StartDate = startDate, EndDate = endDate },

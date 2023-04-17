@@ -1,7 +1,6 @@
 using AutoMapper;
 using Inventofree.Module.AuditTrail.Abstractions;
 using Inventofree.Module.AuditTrail.Core.Dto.AuditTrail;
-using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
 using Moq;
 using Moq.EntityFrameworkCore;
@@ -18,17 +17,14 @@ public class GetAuditTrailByIdQueryTest
         //Arrange
         var mapperMock = new Mock<IMapper>();
         var auditTrailDbContextMock = new Mock<IAuditTrailDbContext>();
-        var expectedAuditTrailDto =  new AuditTrailDto() { Id = 1 };
+        var expectedAuditTrailDto =  new AuditTrailDto() { Id = 1, Details = "Details", Action = "Action" };
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>() { new Entities.AuditTrail() { Id = 1 } });
-        
-        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Entities.AuditTrail>()))
-            .Returns(new AuditTrailDto() { Id = 1 });
-        
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new () { Id = 1, UpdatedBy = 1, Details = "Details", Action = "Action", CreatedBy = 1, CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now} });
+        mapperMock.Setup(a => a.Map<AuditTrailDto>(It.IsAny<Core.Entities.AuditTrail>()))
+            .Returns(new AuditTrailDto() { Id = 1, Details = "Details", Action = "Action" });
         var handler = new GetAuditTrailByIdHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-
         var result = handler.Handle(new GetAuditTrailByIdQuery() { Id = 1  },
             new CancellationToken(false));
         //Assert
@@ -44,8 +40,7 @@ public class GetAuditTrailByIdQueryTest
         var auditTrailDbContextMock = new Mock<IAuditTrailDbContext>();
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
-            .ReturnsDbSet(new List<Entities.AuditTrail>() { new Entities.AuditTrail() { Id = 2 } });
-        
+            .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new () { Id = 2 } });
         var handler = new GetAuditTrailByIdHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
         //Assert

@@ -7,6 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>**</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+    
+    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="12.0.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
       <PackageReference Include="Moq" Version="4.18.3" />

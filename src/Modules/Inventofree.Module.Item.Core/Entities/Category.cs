@@ -9,6 +9,6 @@ namespace Inventofree.Module.Item.Core.Entities
         public string Description { get; set; }
         public long CreatedBy { get; set; }
         public long UpdatedBy { get; set; }
-        public IList<Item> Items { get; } = new List<Item>();
+        public IList<Item> Items { get; set; } = new List<Item>();
     }
 }

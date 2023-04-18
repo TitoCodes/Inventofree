@@ -1,8 +1,8 @@
-using Inventofree.Module.AuditTrail.Core.Profile;
+using Inventofree.Module.Item.Core.Profile;
 using Shouldly;
 using Xunit;
 
-namespace Inventofree.Module.AuditTrail.Core.Tests.Profile;
+namespace Inventofree.Module.Item.Core.Tests.Profile;
 
 public class MappingProfileTest
 {

@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\src\Modules\Inventofree.Module.AuditTrail.Core\Inventofree.Module.AuditTrail.Core.csproj" />
+      <ProjectReference Include="..\..\..\..\src\Modules\Inventofree.Module.Item.Core\Inventofree.Module.Item.Core.csproj" />
     </ItemGroup>
 
 </Project>

@@ -23,7 +23,7 @@ namespace Inventofree.Module.Item.Core.Queries.Category.GetAllCategories
             CancellationToken cancellationToken)
         {
             var categories = await _context.Categories.OrderBy(a => a.Id).ToListAsync(cancellationToken);
-            if (categories == null) 
+            if (!categories.Any()) 
                 throw new ArgumentNullException(ItemErrorMessages.CategoriesNotFound);
             
             return categories;

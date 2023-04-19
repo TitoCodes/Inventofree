@@ -17,10 +17,8 @@ public class DeleteAuditTrailCommandHandlerTest
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
             .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new() { Id = 1 } });
-        
         var handler = new DeleteAuditTrailCommandHandler(auditTrailDbContextMock.Object);
         //Act
-
         var result = handler.Handle(new DeleteAuditTrailCommand() { Id = 1  },
             new CancellationToken(false));
         //Assert
@@ -36,7 +34,6 @@ public class DeleteAuditTrailCommandHandlerTest
         auditTrailDbContextMock
             .Setup(a => a.AuditTrails)
             .ReturnsDbSet(new List<Core.Entities.AuditTrail>() { new (){ Id = 2 } });
-        
         var handler = new DeleteAuditTrailCommandHandler(auditTrailDbContextMock.Object);
         //Act
         //Assert

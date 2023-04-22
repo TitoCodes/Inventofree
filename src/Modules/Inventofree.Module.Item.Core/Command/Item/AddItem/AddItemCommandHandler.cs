@@ -6,6 +6,7 @@ using Inventofree.Module.Item.Core.Abstractions;
 using Inventofree.Module.Item.Core.Resources;
 using Inventofree.Module.User.Core.Abstractions;
 using Inventofree.Module.User.Core.Resources;
+using Inventofree.Shared.Core.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +28,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.AddItem
         public async Task<long> Handle(AddItemCommand command, CancellationToken cancellationToken)
         {
             if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
-                throw new InvalidOperationException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
+                throw new DuplicateNameException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
 
             var user = await _userDbContext.Users.FirstOrDefaultAsync(a => a.Id == command.CreatedBy,
                 cancellationToken);

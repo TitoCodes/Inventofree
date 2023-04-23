@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.AuditTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.Item.Core.Tests", "test\Modules\Item\Inventofree.Module.Item.Core.Tests\Inventofree.Module.Item.Core.Tests.csproj", "{7EFE9B6C-35B3-45F0-AF1B-A3E8D2EE5E79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventofree.Module.User.Core.Tests", "test\Modules\Inventofree.Module.User.Core.Tests\Inventofree.Module.User.Core.Tests.csproj", "{28B0A137-031E-47FC-8B47-2EFC63DF3E39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,10 @@ Global
 		{7EFE9B6C-35B3-45F0-AF1B-A3E8D2EE5E79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EFE9B6C-35B3-45F0-AF1B-A3E8D2EE5E79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EFE9B6C-35B3-45F0-AF1B-A3E8D2EE5E79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28B0A137-031E-47FC-8B47-2EFC63DF3E39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28B0A137-031E-47FC-8B47-2EFC63DF3E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28B0A137-031E-47FC-8B47-2EFC63DF3E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28B0A137-031E-47FC-8B47-2EFC63DF3E39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0A12F967-31F9-430A-8575-3D83BE0BF71D} = {B3242C85-5010-4B5D-9592-8649A2F0EAFD}
@@ -174,5 +180,6 @@ Global
 		{09732005-DC2D-46DC-9386-F074FFF1FE34} = {779323EA-D7CA-4E4F-B9ED-BDB450C90694}
 		{ED527B13-3DFC-415C-AEF3-B00A81995FD7} = {779323EA-D7CA-4E4F-B9ED-BDB450C90694}
 		{7EFE9B6C-35B3-45F0-AF1B-A3E8D2EE5E79} = {7D837369-D436-4276-85B2-33418DC67993}
+		{28B0A137-031E-47FC-8B47-2EFC63DF3E39} = {90AB1EE5-1FE2-4B61-9E58-11FE68DC0E94}
 	EndGlobalSection
 EndGlobal

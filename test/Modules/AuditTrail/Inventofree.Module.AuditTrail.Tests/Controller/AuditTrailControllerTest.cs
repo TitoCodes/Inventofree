@@ -4,8 +4,8 @@ using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.DeleteAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Command.AuditTrail.UpdateAuditTrail;
 using Inventofree.Module.AuditTrail.Core.Dto.AuditTrail;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAllAuditTrail;
+using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailByCreatedDateRange;
 using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetAuditTrailById;
-using Inventofree.Module.AuditTrail.Core.Queries.AuditTrail.GetDirectoryByCreatedDateRange;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -173,7 +173,7 @@ public class AuditTrailControllerTest
         };
 
         mediatrMock
-            .Setup(a => a.Send(It.IsAny<GetDirectoryByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()))
+            .Setup(a => a.Send(It.IsAny<GetAuditTrailByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(expectedAuditTrailList)
             .Verifiable();
 
@@ -182,11 +182,13 @@ public class AuditTrailControllerTest
         var result = await sut.GetAuditTrailByCreatedDateRangeAsync(It.IsAny<DateTime>(),It.IsAny<DateTime>(), It.IsAny<CancellationToken>());
         var okResult = result as OkObjectResult;
 
-        mediatrMock.Verify(a => a.Send(It.IsAny<GetDirectoryByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+        mediatrMock.Verify(a => a.Send(It.IsAny<GetAuditTrailByCreatedDateRangeQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         okResult.ShouldNotBeNull();
         okResult.Value.ShouldNotBeNull();
         okResult.StatusCode.ShouldBe(StatusCodes.Status200OK);
         var auditTrailList = okResult.Value as List<AuditTrailDto>;
         auditTrailList.ShouldBeEquivalentTo(expectedAuditTrailList);
     }
+    
+    
 }

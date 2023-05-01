@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>**</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\Category\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\src\Modules\Inventofree.Module.Item.Core\Inventofree.Module.Item.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0-preview-20230223-05" />
+      <PackageReference Include="Moq" Version="4.18.4" />
+      <PackageReference Include="Moq.EntityFrameworkCore" Version="7.0.0.2" />
+      <PackageReference Include="Shouldly" Version="4.2.0" />
+      <PackageReference Include="xunit" Version="2.4.2" />
+      <PackageReference Include="xunit.extensibility.core" Version="2.4.2" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+</Project>

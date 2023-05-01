@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.User.Core.Command.User.CreateUser;
-using Inventofree.Module.User.Core.Command.User.InsertUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

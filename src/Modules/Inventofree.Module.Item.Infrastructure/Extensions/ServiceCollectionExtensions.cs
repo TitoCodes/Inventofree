@@ -12,7 +12,7 @@ namespace Inventofree.Module.Item.Infrastructure.Extensions
         {
             services
                 .AddDatabaseContext<ItemDbContext>(config)
-                .AddScoped<IItemDbContext>(provider => provider.GetService<ItemDbContext>());
+                .AddScoped<IItemDbContext, ItemDbContext>();
             return services;
         }
     }

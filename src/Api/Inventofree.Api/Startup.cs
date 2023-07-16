@@ -19,7 +19,8 @@ namespace Inventofree.Api
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
+        private const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,6 +33,14 @@ namespace Inventofree.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Inventofree.Api", Version = "v1"});
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy  =>
+                    {
+                        policy.WithOrigins("http://localhost:3000/");
+                    });
             });
         }
 
@@ -54,6 +63,8 @@ namespace Inventofree.Api
             app.UseMiddleware<ExceptionMiddleware>();
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseCors(MyAllowSpecificOrigins);
         }
     }
 }

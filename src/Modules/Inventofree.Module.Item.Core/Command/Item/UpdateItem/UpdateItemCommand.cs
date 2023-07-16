@@ -9,6 +9,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
         public string Name { get; set; }
         public string Detail { get; set; }
         public long UpdatedBy { get; set; }
+        public long? CategoryId { get; set; }
         public PriceDto Price { get; set; }
     }
 }

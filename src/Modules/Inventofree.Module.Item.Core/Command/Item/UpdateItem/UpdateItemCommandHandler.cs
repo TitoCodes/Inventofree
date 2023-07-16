@@ -36,7 +36,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
         
         public async Task<bool> Handle(UpdateItemCommand command, CancellationToken cancellationToken)
         {
-            if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name, cancellationToken))
+            if (await _itemDbContext.Items.AnyAsync(c => c.Name == command.Name && c.Id != command.Id, cancellationToken))
                 throw new DuplicateNameException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Item)));
             
             var user = await _userDbContext.Users
@@ -52,7 +52,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
                     .FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             
             if (existingItem == null)
-                throw new InvalidOperationException(ItemErrorMessages.NotFound);
+                throw new InvalidOperationException(string.Format(ItemErrorMessages.NotFound, command.Id));
             
             var serializedOldValues = JsonSerializer.Serialize(existingItem);
             existingItem.Name = command.Name;
@@ -70,6 +70,17 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
                     Id = oldPriceId
                 };
                 await _mediator.Send(deletePriceCommand, cancellationToken);
+            }
+            
+            if (command.CategoryId != null)
+            {
+                var category =
+                    await _itemDbContext.Categories.AsNoTracking().FirstOrDefaultAsync(a => a.Id == command.CategoryId,
+                        cancellationToken);
+                if (category == null)
+                    throw new InvalidOperationException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+                existingItem.CategoryId = command.CategoryId;
+                existingItem.Category = category;
             }
             
             var serializedNewValues = JsonSerializer.Serialize(existingItem);

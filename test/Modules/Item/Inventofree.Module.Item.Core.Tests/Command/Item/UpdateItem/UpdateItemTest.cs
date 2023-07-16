@@ -95,6 +95,22 @@ public class UpdateItemTest
                         CreatedDate = DateTimeOffset.Now,
                         Currency = CurrencyType.Php
                     }
+                },
+                new()
+                {
+                    Id = 2, 
+                    Name = "Name", 
+                    Detail = "Details 2", 
+                    CreatedBy = 1, 
+                    UpdatedBy = 1,
+                    CreatedDate = DateTimeOffset.Now, 
+                    ModifiedDate = DateTimeOffset.Now,
+                    Price = new Core.Entities.Price()
+                    {
+                        Amount = 1,
+                        CreatedDate = DateTimeOffset.Now,
+                        Currency = CurrencyType.Php
+                    }
                 }
             });
         itemDbContextMock
@@ -112,7 +128,7 @@ public class UpdateItemTest
         var handler = new UpdateItemCommandHandler(itemDbContextMock.Object, userDbContextMock.Object, mediatorMock.Object, mapperMock.Object);
         //Act
         //Assert
-        Should.Throw<DuplicateNameException>(() => handler.Handle(new UpdateItemCommand() { Id = 1, UpdatedBy = 1, Name = "Name", Price = new PriceDto(){ Amount = 15000}},
+        Should.Throw<DuplicateNameException>(() => handler.Handle(new UpdateItemCommand() { Id = 2, UpdatedBy = 1, Name = "Name", Price = new PriceDto(){ Amount = 15000}},
             new CancellationToken(false)));
     }
     

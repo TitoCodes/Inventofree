@@ -37,7 +37,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.DeleteItem
             
             var addAuditTrailRecord = new AddAuditTrailCommand()
             {
-                Action = string.Format(AuditTrailSystemMessages.FormatAction, "deleted", 1, existingItem.Id),
+                Action = string.Format(AuditTrailSystemMessages.FormatAction, 1, "deleted", existingItem.Id),
                 Details = string.Format(AuditTrailSystemMessages.FormatDetails, JsonSerializer.Serialize(existingItem), "N/A"),
                 CreatedBy = 1
             };

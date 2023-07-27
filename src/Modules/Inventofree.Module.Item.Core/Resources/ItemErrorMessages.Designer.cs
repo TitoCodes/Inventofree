@@ -68,5 +68,11 @@ namespace Inventofree.Module.Item.Core.Resources {
                 return ResourceManager.GetString("CategoriesNotFound", resourceCulture);
             }
         }
+        
+        public static string UnableToDeleteCategoryUsedInItem {
+            get {
+                return ResourceManager.GetString("UnableToDeleteCategoryUsedInItem", resourceCulture);
+            }
+        }
     }
 }

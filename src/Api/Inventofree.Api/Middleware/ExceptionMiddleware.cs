@@ -34,7 +34,12 @@ namespace Inventofree.Api.Middleware
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            await context.Response.WriteAsync(errorMessage);
+            var errorObject = new 
+            {
+                errors = new {errorMessage = errorMessage}
+            };
+            
+            await context.Response.WriteAsJsonAsync(errorObject);
         }
     }
 }

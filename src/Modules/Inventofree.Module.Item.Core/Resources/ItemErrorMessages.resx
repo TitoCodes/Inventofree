@@ -30,4 +30,7 @@
     <data name="CategoriesNotFound" xml:space="preserve">
         <value>Categories not found</value>
     </data>
+    <data name="UnableToDeleteCategoryUsedInItem" xml:space="preserve">
+        <value>Unable to delete {0} because it's currently used in an item</value>
+    </data>
 </root>

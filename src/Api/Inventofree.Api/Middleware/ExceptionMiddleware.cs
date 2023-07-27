@@ -36,7 +36,7 @@ namespace Inventofree.Api.Middleware
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             var errorObject = new 
             {
-                error = new {errorMessage = errorMessage}
+                errors = new {errorMessage = errorMessage}
             };
             
             await context.Response.WriteAsJsonAsync(errorObject);

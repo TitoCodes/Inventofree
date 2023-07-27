@@ -23,6 +23,9 @@ namespace Inventofree.Module.Item.Core.Command.Category.DeleteCategory
                 await _itemDbContext.Categories.FirstOrDefaultAsync(c => c.Id == command.Id, cancellationToken);
             if (existingCategory == null)
                 throw new ArgumentNullException(string.Format(ItemErrorMessages.NotFound, nameof(Entities.Category)));
+            var isUsedInItems = await _itemDbContext.Items.AnyAsync(a => a.CategoryId == existingCategory.Id, cancellationToken);
+            if (isUsedInItems)
+                throw new InvalidOperationException(string.Format(ItemErrorMessages.UnableToDeleteCategoryUsedInItem, existingCategory.Name));
             
             _itemDbContext.Categories.Remove(existingCategory);
             await _itemDbContext.SaveChangesAsync(cancellationToken);

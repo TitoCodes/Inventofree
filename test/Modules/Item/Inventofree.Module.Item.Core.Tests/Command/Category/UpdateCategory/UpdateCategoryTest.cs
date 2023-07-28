@@ -46,12 +46,12 @@ public class UpdateCategoryTest
         var mapperMock = new Mock<IMapper>();
         categoryDbContextMock
             .Setup(a => a.Categories)
-            .ReturnsDbSet(new List<Core.Entities.Category>() { new() { Id = 1 , Name = "Name"} });
+            .ReturnsDbSet(new List<Core.Entities.Category>() { new() { Id = 2 , Name = "Name"} });
         userDbContextMock
             .Setup(a => a.Users)
             .ReturnsDbSet(new List<User.Core.Entities.User>() { new() { Id = 2 } });
         mapperMock.Setup(a => a.Map<Core.Entities.Category>(It.IsAny<AddCategoryCommand>()))
-            .Returns(new Core.Entities.Category() { Id = 1 });
+            .Returns(new Core.Entities.Category() { Id = 1, Name = "Name"});
         var handler = new UpdateCategoryCommandHandler(categoryDbContextMock.Object, userDbContextMock.Object, mapperMock.Object);
         //Act
         //Assert

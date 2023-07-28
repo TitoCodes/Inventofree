@@ -25,7 +25,7 @@ namespace Inventofree.Module.Item.Core.Command.Category.UpdateCategory
 
         public async Task<bool> Handle(UpdateCategoryCommand command, CancellationToken cancellationToken)
         {
-            if (await _itemDbContext.Categories.AnyAsync(c => c.Name == command.Name, cancellationToken))
+            if (await _itemDbContext.Categories.AnyAsync(c => c.Name == command.Name && command.Id != c.Id, cancellationToken))
                 throw new DuplicateNameException(string.Format(ItemErrorMessages.DuplicateName, nameof(Entities.Category)));
 
             var user = await _userDbContext.Users.AsNoTracking()

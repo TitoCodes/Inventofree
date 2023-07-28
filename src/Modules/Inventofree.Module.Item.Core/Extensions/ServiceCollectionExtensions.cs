@@ -10,7 +10,7 @@ namespace Inventofree.Module.Item.Core.Extensions
     {
         public static IServiceCollection AddItemCore(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddFluentValidationAutoValidation().AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;

@@ -8,7 +8,7 @@ namespace Inventofree.Module.User.Core.Extensions
     {
         public static IServiceCollection AddUserCore(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             return services;
         }
     }

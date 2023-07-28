@@ -59,6 +59,7 @@ namespace Inventofree.Module.Item.Core.Command.Item.UpdateItem
             existingItem.Detail = command.Detail;
             existingItem.ModifiedDate = DateTimeOffset.UtcNow;
             existingItem.UpdatedBy = command.UpdatedBy;
+            existingItem.Quantity = command.Quantity;
             if (existingItem.Price.Amount.CompareTo(command.Price.Amount) != 0)
             {
                 var oldPriceId = existingItem.Price.Id;

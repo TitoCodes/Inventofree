@@ -7,6 +7,7 @@ using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
 using Inventofree.Module.Item.Core.Queries.Item.GetAllItems;
 using Inventofree.Module.Item.Core.Queries.Item.GetItemById;
 using Inventofree.Module.Item.Core.Queries.Item.GetItemsByName;
+using Inventofree.Module.Item.Core.Queries.Item.GetItemsCount;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,13 @@ namespace Inventofree.Module.Item.Controller.v1
         {
             var item = await _mediator.Send(new GetAllItemsQuery(), cancellationToken);
             return Ok(item);
+        }
+        
+        [HttpGet("count")]
+        public async Task<IActionResult> GetTotalItemsCountAsync(CancellationToken cancellationToken)
+        {
+            var itemCount = await _mediator.Send(new GetItemsCountQuery(), cancellationToken);
+            return Ok(itemCount);
         }
 
         [HttpGet("{id:int}")]

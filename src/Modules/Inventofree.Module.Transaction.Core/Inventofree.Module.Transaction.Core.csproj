@@ -28,10 +28,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared\Inventofree.Shared.Core\Inventofree.Shared.Core.csproj" />
+      <Folder Include="Queries\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Queries\" />
+      <Compile Remove="Inventofree.Module.Transaction.Core\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Inventofree.Module.Transaction.Core\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Inventofree.Module.Transaction.Core\**" />
     </ItemGroup>
 </Project>

@@ -18,21 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Inventofree.Module.Transaction.Core">
-        <HintPath>..\Inventofree.Module.Transaction.Core\bin\Debug\net6.0\Inventofree.Module.Transaction.Core.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Inventofree.Module.Transaction.Core\Inventofree.Module.Transaction.Core.csproj" />
       <ProjectReference Include="..\Inventofree.Module.Transaction.Infrastructure\Inventofree.Module.Transaction.Infrastructure.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Inventofree.Module.Transaction.Core\Inventofree.Module.Transaction.Core.csproj" />
-      <ProjectReference Include="..\Inventofree.Module.Transaction.Infrastructure\Inventofree.Module.Transaction.Infrastructure.csproj" />
-    </ItemGroup>
-
-
 </Project>
 

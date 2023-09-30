@@ -12,7 +12,7 @@ namespace Inventofree.Module.AuditTrail.Core.Tests.Queries.AuditTrail.GetAuditTr
 public class GetAuditTrailByIdQueryTest
 {
     [Fact]
-    public void ShouldReturnAuditTrail()
+    public async Task ShouldReturnAuditTrail()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -25,11 +25,11 @@ public class GetAuditTrailByIdQueryTest
             .Returns(new AuditTrailDto() { Id = 1, Details = "Details", Action = "Action" });
         var handler = new GetAuditTrailByIdHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetAuditTrailByIdQuery() { Id = 1  },
+        var result = await handler.Handle(new GetAuditTrailByIdQuery() { Id = 1  },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedAuditTrailDto);
+        result.ShouldBeEquivalentTo(expectedAuditTrailDto);
     }
     
     [Fact]

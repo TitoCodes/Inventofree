@@ -12,7 +12,7 @@ namespace Inventofree.Module.Item.Core.Tests.Queries.Item.GetAllItems;
 public class GetAllItemsQueryTest
 {
     [Fact]
-    public void ShouldReturnItems()
+    public async Task ShouldReturnItems()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -25,11 +25,11 @@ public class GetAllItemsQueryTest
             .Returns(new ItemDto() { Id = 1 });
         var handler = new GetAllItemsQueryHandler(itemContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetAllItemsQuery() { },
+        var result = await handler.Handle(new GetAllItemsQuery() { },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedItemDto);
+        result.ShouldBeEquivalentTo(expectedItemDto);
     }
     
     [Fact]

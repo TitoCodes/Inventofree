@@ -14,7 +14,7 @@ namespace Inventofree.Module.Item.Core.Tests.Queries.Item.GetItemsById;
 public class GetItemsByIdTest
 {
     [Fact]
-    public void ShouldReturnItem()
+    public async Task ShouldReturnItem()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -27,11 +27,11 @@ public class GetItemsByIdTest
             .Returns(new ItemDto() { Id = 1 });
         var handler = new GetItemByIdQueryHandler(itemDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetItemByIdQuery() { Id = 1  },
+        var result = await handler.Handle(new GetItemByIdQuery() { Id = 1  },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedItemDto);
+        result.ShouldBeEquivalentTo(expectedItemDto);
     }
     
     [Fact]

@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latestmajor</LangVersion>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>Extensions/ServiceCollectionExtensions.cs</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\Inventofree.Shared.Core\Inventofree.Shared.Core.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.Item.Core\Inventofree.Module.Item.Core.csproj" />
+      <ProjectReference Include="..\Inventofree.Module.User.Core\Inventofree.Module.User.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Inventofree.Module.Transaction.Core\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Inventofree.Module.Transaction.Core\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Inventofree.Module.Transaction.Core\**" />
+    </ItemGroup>
+</Project>

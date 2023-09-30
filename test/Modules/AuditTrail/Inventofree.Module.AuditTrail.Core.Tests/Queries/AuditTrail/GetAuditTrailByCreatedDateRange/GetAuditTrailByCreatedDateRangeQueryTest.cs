@@ -12,7 +12,7 @@ namespace Inventofree.Module.AuditTrail.Core.Tests.Queries.AuditTrail.GetAuditTr
 public class GetAuditTrailByCreatedDateRangeQueryTest
 {
     [Fact]
-    public void ShouldReturnAuditTrailWithinDateRange()
+    public async Task ShouldReturnAuditTrailWithinDateRange()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -28,10 +28,10 @@ public class GetAuditTrailByCreatedDateRangeQueryTest
             .Returns(new List<AuditTrailDto>() { new AuditTrailDto() { Id = 1 } });
         var handler = new GetAuditTrailByCreatedDateRangeQueryHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetAuditTrailByCreatedDateRangeQuery() { StartDate = startDate, EndDate = endDate },
+        var result = await handler.Handle(new GetAuditTrailByCreatedDateRangeQuery() { StartDate = startDate, EndDate = endDate },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedAuditTrailDto);
+        result.ShouldBeEquivalentTo(expectedAuditTrailDto);
     }
 }

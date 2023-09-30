@@ -1,6 +1,5 @@
 using AutoMapper;
 using Inventofree.Module.Item.Core.Abstractions;
-using Inventofree.Module.Item.Core.Command.Category.AddCategory;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
 using Inventofree.Module.User.Core.Abstractions;
 using Inventofree.Shared.Core.Exceptions;
@@ -14,7 +13,7 @@ namespace Inventofree.Module.Item.Core.Tests.Command.Item.AddItem;
 public class AddItemTest
 {
     [Fact]
-    public void ShouldAddItem()
+    public async Task ShouldAddItem()
     {
         //Arrange
         var itemDbContextMock = new Mock<IItemDbContext>();
@@ -33,13 +32,12 @@ public class AddItemTest
             .Returns(new Core.Entities.Item() { Id = 1, Name = "Name", Detail = "Details", CreatedBy = 1, UpdatedBy = 1, CreatedDate = DateTimeOffset.Now, ModifiedDate = DateTimeOffset.Now });
         var handler = new AddItemCommandHandler(itemDbContextMock.Object, userDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new AddItemCommand() { CreatedBy = 1, Name = "Names", Detail = "Details", CategoryId = 1},
+        var result = await handler.Handle(new AddItemCommand() { CreatedBy = 1, Name = "Names", Detail = "Details", CategoryId = 1},
             new CancellationToken(false));
         //Assert
         itemDbContextMock.Verify(a => a.Items.AddAsync( It.IsAny<Core.Entities.Item>() , It.IsAny<CancellationToken>()), Times.Once);
         itemDbContextMock.Verify(a => a.SaveChangesAsync( It.IsAny<CancellationToken>()), Times.Once);
-        result.ShouldNotBeNull();
-        result.Result.ShouldBe(1);
+        result.ShouldBe(1);
     }
     
     [Fact]

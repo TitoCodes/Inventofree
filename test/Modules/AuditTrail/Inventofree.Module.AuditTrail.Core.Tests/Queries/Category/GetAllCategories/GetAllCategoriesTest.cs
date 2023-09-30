@@ -10,7 +10,7 @@ namespace Inventofree.Module.AuditTrail.Core.Tests.Queries.Category.GetAllCatego
 public class GetAllCategoriesTest
 {
     [Fact]
-    public void ShouldReturnCategories()
+    public async Task ShouldReturnCategories()
     {
         //Arrange
         var itemDbContextMock = new Mock<IItemDbContext>();
@@ -20,11 +20,11 @@ public class GetAllCategoriesTest
             .ReturnsDbSet(new List<Item.Core.Entities.Category>() { new () { Id = 1, Name = "Name"} });
         var handler = new GetAllCategoriesQueryHandler(itemDbContextMock.Object);
         //Act
-        var result = handler.Handle(new GetAllCategoriesQuery() { },
+        var result = await handler.Handle(new GetAllCategoriesQuery() { },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedCategoriesDto);
+        result.ShouldBeEquivalentTo(expectedCategoriesDto);
     }
     
     [Fact]

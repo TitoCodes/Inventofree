@@ -11,7 +11,7 @@ namespace Inventofree.Module.AuditTrail.Core.Tests.Queries.Category.GetCategoryB
 public class GetCategoryByNameTest
 {
     [Fact]
-    public void ShouldReturnCategory()
+    public async Task ShouldReturnCategory()
     {
         //Arrange
         var itemDbContextMock = new Mock<IItemDbContext>();
@@ -21,11 +21,11 @@ public class GetCategoryByNameTest
             .ReturnsDbSet(new List<Item.Core.Entities.Category>() { new () { Id = 1, Name = "Name"} });
         var handler = new GetCategoryByNameQueryHandler(itemDbContextMock.Object);
         //Act
-        var result = handler.Handle(new GetCategoryByNameQuery() { Name = "Name"},
+        var result = await handler.Handle(new GetCategoryByNameQuery() { Name = "Name"},
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedCategoryDto);
+        result.ShouldBeEquivalentTo(expectedCategoryDto);
         
     }
     [Fact]

@@ -12,7 +12,7 @@ namespace Inventofree.Module.AuditTrail.Core.Tests.Queries.AuditTrail.GetAllAudi
 public class GetAllAuditTrailQueryTest
 {
     [Fact]
-    public void ShouldReturnAuditTrailEmptySearchString()
+    public async Task ShouldReturnAuditTrailEmptySearchString()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -25,15 +25,15 @@ public class GetAllAuditTrailQueryTest
             .Returns(new AuditTrailDto() { Id = 1 });
         var handler = new GetAllAuditTrailHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetAllAuditTrailQuery() { SearchString = string.Empty },
+        var result = await handler.Handle(new GetAllAuditTrailQuery() { SearchString = string.Empty },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedAuditTrailDto);
+        result.ShouldBeEquivalentTo(expectedAuditTrailDto);
     }
     
     [Fact]
-    public void ShouldReturnAuditTrailWithSearchString()
+    public async Task ShouldReturnAuditTrailWithSearchString()
     {
         //Arrange
         var mapperMock = new Mock<IMapper>();
@@ -46,11 +46,11 @@ public class GetAllAuditTrailQueryTest
             .Returns(new AuditTrailDto() { Id = 1, Action = "Sample action"});
         var handler = new GetAllAuditTrailHandler(auditTrailDbContextMock.Object, mapperMock.Object);
         //Act
-        var result = handler.Handle(new GetAllAuditTrailQuery() { SearchString = "Sample action" },
+        var result = await handler.Handle(new GetAllAuditTrailQuery() { SearchString = "Sample action" },
             new CancellationToken(false));
         //Assert
         result.ShouldNotBeNull();
-        result.Result.ShouldBeEquivalentTo(expectedAuditTrailDto);
+        result.ShouldBeEquivalentTo(expectedAuditTrailDto);
     }
     
     [Fact]

@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>latestmajor</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -47,6 +48,12 @@
         <SonarQubeSetting Include="sonar.coverage.exclusions">
             <Value>Extensions/ServiceCollectionExtensions.cs</Value>
         </SonarQubeSetting>
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <Folder Include="Dto\Transaction\" />
     </ItemGroup>
 
 </Project>

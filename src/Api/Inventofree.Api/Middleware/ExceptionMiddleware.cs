@@ -4,42 +4,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Inventofree.Api.Middleware
+namespace Inventofree.Api.Middleware;
+
+public class ExceptionMiddleware
 {
-    public class ExceptionMiddleware
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionMiddleware> _logger;
+
+    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        _next = next;
+        _logger = logger;
+    }
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
         {
-            _next = next;
-            _logger = logger;
+            await _next(context);
         }
-
-        public async Task InvokeAsync(HttpContext context)
+        catch (Exception ex)
         {
-            try
-            {
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(exception: ex, message:"An error occurred: {ErrorMessage}", ex.Message);
-                await ReturnErrorResponse(context, errorMessage:ex.Message);
-            }
+            _logger.LogError(exception: ex, message:"An error occurred: {ErrorMessage}", ex.Message);
+            await ReturnErrorResponse(context, errorMessage:ex.Message);
         }
+    }
 
-        private static async Task ReturnErrorResponse(HttpContext context, string errorMessage)
+    private static async Task ReturnErrorResponse(HttpContext context, string errorMessage)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        var errorObject = new 
         {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            var errorObject = new 
-            {
-                errors = new {errorMessage = errorMessage}
-            };
+            errors = new { errorMessage }
+        };
             
-            await context.Response.WriteAsJsonAsync(errorObject);
-        }
+        await context.Response.WriteAsJsonAsync(errorObject);
     }
 }

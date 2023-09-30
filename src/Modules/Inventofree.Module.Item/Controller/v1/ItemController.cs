@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Inventofree.Module.Item.Core.Command.Item.AddItem;
+using Inventofree.Module.Item.Core.Command.Item.DeductItem;
 using Inventofree.Module.Item.Core.Command.Item.DeleteItem;
 using Inventofree.Module.Item.Core.Command.Item.SetItemCategory;
 using Inventofree.Module.Item.Core.Command.Item.UpdateItem;
@@ -77,6 +78,13 @@ namespace Inventofree.Module.Item.Controller.v1
         public async Task<IActionResult> DeleteItemAsync(int id, CancellationToken cancellationToken)
         {
             await _mediator.Send(new DeleteItemCommand() { Id = id }, cancellationToken);
+            return NoContent();
+        }
+        
+        [HttpPut("deduct")]
+        public async Task<IActionResult> DeductItemAsync(DeductItemCommand command, CancellationToken cancellationToken)
+        {
+            await _mediator.Send(command, cancellationToken);
             return NoContent();
         }
     }
